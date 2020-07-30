@@ -1,7 +1,7 @@
 SOURCES_DIR="sources/"
 SROOT="${LFS}/${SOURCES_DIR}"
 LOGS_DIR=".logs/"
-RUNSH="toolchain/"
+RUNSH=`pwd`"/toolchain/"
 
 toolchain1(){
 	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils p1
