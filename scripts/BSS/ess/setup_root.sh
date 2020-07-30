@@ -1,5 +1,5 @@
-SETUP_ENV="/chroot"
-ESS_FILES="${SETUP_ENV}/ess"
+SETUP_ENV="/chroot/"
+ESS_FILES="${SETUP_ENV}ess"
 
 init_std_dirtree(){
     echo "<<< based on the Filesystem Hierarchy Standard >>>"

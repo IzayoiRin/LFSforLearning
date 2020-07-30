@@ -1,6 +1,6 @@
-SETUP_ENV="/chroot"
-SETUP="${SETUP_ENV}/ess/setup_root.sh"
-INSTALLER="${SETUP_ENV}/installer.sh"
+SETUP_ENV="/chroot/"
+SETUP="${SETUP_ENV}ess/setup_root.sh"
+INSTALLER="${SETUP_ENV}installer.sh"
 
 
 init_virtual_kernel_fs(){

@@ -1,6 +1,6 @@
 # !bin/bash
 
-LOG_PREFIX="${LFS}/sources/.logs/"
+LOG_PREFIX="/sources/.logs/"
 LOGS_NAME="LinuxAPIInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
@@ -27,7 +27,7 @@ icompile(){
 main(){
 	echo -e "LinuxAPI\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 1G\n\r\tVersion: 5.5.3"
 	echo ">>>>> Begin to COMPILE >>>>>"
-	icompile
+	#icompile
 }
 
 
