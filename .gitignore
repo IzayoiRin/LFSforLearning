@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+sources/*.tar
+logs/*.log
+menus/
+my.txt
+workRec.txt
+.SYS_SOURCES/
+.idea/
 # Distribution / packaging
 .Python
 build/
