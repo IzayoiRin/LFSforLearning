@@ -10,7 +10,7 @@ basicsys1(){
 
 
 main(){
-	#bash ./pre_basic_sys.sh
+	bash ./pre_basic_sys.sh
 	cd $SROOT
 	echo "################# STEP 1 #####################"
 	pwd
