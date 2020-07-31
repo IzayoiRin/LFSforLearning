@@ -42,7 +42,8 @@ iinstall(){
 	echo "symlink: ../../lib/~  >>>> /usr/lib/libhistory.so"
 	ln -sf ../../lib/$(readlink /usr/lib/libhistory.so ) /usr/lib/libhistory.so
 	#  install the documentation
-	install -v -m644 doc/*.{ps,pdf,html,dvi} /usr/share/doc/readline-8.0
+	install -m644 doc/*.{ps,pdf,html,dvi} /usr/share/doc/readline-8.0 \
+	1> /dev/null 2>> $LOGS
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
