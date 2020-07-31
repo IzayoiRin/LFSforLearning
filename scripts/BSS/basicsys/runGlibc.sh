@@ -63,6 +63,22 @@ min_locales_respond_difflang(){
 	}
 
 
+additional_install(){
+	echo "Installing conf & runtime for nscd ... ..."
+	cp -v ../nscd/nscd.conf /etc/nscd.conf
+	mkdir -pv /var/cache/nscd
+
+	echo -e "! Install locale set for test:\n\t${1} Mod acrossing Lacaledef"
+	if [ "$1" == "--min" ];then
+		# install the minimum set of locales necessary for the optimal coverage of tests
+		min_locales_respond_difflang 1> /dev/null 2>> $LOGS
+	else
+		# install all locales listed in the glibc-2.31/localedata/SUPPORTED
+		make localedata/install-locales 1> /dev/null 2>> $LOGS
+	fi
+}
+
+
 iinstall(){
 	pch="../${PATCH_FILE}"
 	if [ ! -f $pch ];then
@@ -126,18 +142,7 @@ iinstall(){
 	# install compiled package 
 	make install 1> /dev/null 2>> $LOGS
 
-	echo "Installing conf & runtime for nscd ... ..."
-	cp -v ../nscd/nscd.conf /etc/nscd.conf
-	mkdir -pv /var/cache/nscd
-
-	echo -e "! Install locale set for test:\n\t${1} Mod acrossing Lacaledef"
-	if [ "$1" == "--min" ];then
-		# install the minimum set of locales necessary for the optimal coverage of tests
-		locales_respond_difflang 1> /dev/null 2>> $LOGS
-	else
-		# install all locales listed in the glibc-2.31/localedata/SUPPORTED
-		make localedata/install-locales 1> /dev/null 2>> $LOGS
-	fi
+	additional_install
 	return 0	
 }
 
