@@ -10,7 +10,7 @@ iinstall(){
 	# Reinstall cause old libraries to be moved to <libraryname>.old triggering linking bug in ldconfig
 	echo "! Fix inherit problems"
 	sed -i '/MV.*old/d' Makefile.in
-	sed -i '/{OLDSUFF}/c:' support/shlib-instal
+	sed -i '/{OLDSUFF}/c:' support/shlib-install
 
 	conf="./${CONFIGURE_FILE}"
 	if [ ! -f $conf ];then
@@ -19,8 +19,7 @@ iinstall(){
 	fi
 
 	echo "Configuring ... ..."
-	$conf \
-	--prefix=/usr \
+	$conf --prefix=/usr \
 	--disable-static \
 	--docdir=/usr/share/doc/readline-8.0 \
 	1> /dev/null 2> $LOGS
@@ -35,10 +34,13 @@ iinstall(){
     make SHLIB_LIBS="-L/tools/lib -lncursesw" install \
     1> /dev/null 2>> $LOGS
     # dl to a more appropriate location & fix up permissions and symbolic links
-    mv -v /usr/lib/lib{readline,history}.so.* /lib
+    echo "move: usr/lib/lib{readline,history}.so.* ---> /lib"
+    mv /usr/lib/lib{readline,history}.so.* /lib
 	chmod -v u+w /lib/lib{readline,history}.so.*
-	ln -sfv ../../lib/$(readlink /usr/lib/libreadline.so) /usr/lib/libreadline.so
-	ln -sfv ../../lib/$(readlink /usr/lib/libhistory.so ) /usr/lib/libhistory.so
+	echo "symlink: ../../lib/~  >>>> /usr/lib/libreadline.so"
+	ln -sf ../../lib/$(readlink /usr/lib/libreadline.so) /usr/lib/libreadline.so
+	echo "symlink: ../../lib/~  >>>> /usr/lib/libhistory.so"
+	ln -sf ../../lib/$(readlink /usr/lib/libhistory.so ) /usr/lib/libhistory.so
 	#  install the documentation
 	install -v -m644 doc/*.{ps,pdf,html,dvi} /usr/share/doc/readline-8.0
 

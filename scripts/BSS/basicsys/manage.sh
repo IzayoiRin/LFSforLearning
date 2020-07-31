@@ -5,7 +5,7 @@ SETUP_ENV="/chroot/"
 main(){
     cd $SOURCES
     pwd
-    package=`echo "${1}" | cut -d"-" -f1`
+    package=${1%%\.tar.*}
     dir=`ls -F | grep '/$' | grep $package`
     if [ ! -d "$dir" ];then
         echo "Extract from source: ${1} >> ${package}"

@@ -23,7 +23,7 @@ iinstall(){
 	sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 	# prepare for compilation\
 	# build with Makefile-libbz2_so to create dl libbz2.so and link with
-	make -f Makefile-libbz2_so
+	make -f Makefile-libbz2_so 1> /dev/null 2>> $LOGS
 	make clean
 
 	echo "Making ... ..."

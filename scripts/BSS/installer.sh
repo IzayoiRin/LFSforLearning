@@ -71,8 +71,8 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh file-5.38.tar.gz File --test
 	bash ${RUNSH}/manage.sh readline-8.0.tar.gz Readline
 	bash ${RUNSH}/manage.sh m4-1.4.18.tar.xz M4 --test
-	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc --test
-	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
+	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc25 --test
+	#bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
 }
 
 

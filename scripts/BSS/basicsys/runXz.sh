@@ -17,7 +17,7 @@ iinstall(){
 	$conf \
 	--prefix=/usr \
 	--disable-static \
-	--docdir=/usr/share/doc/xz-5.24 \
+	--docdir=/usr/share/doc/xz-5.2.4 \
 	1> /dev/null 2> $LOGS
 
 	echo "Making ... ..."
