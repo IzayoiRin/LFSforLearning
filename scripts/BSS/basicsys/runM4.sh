@@ -2,11 +2,15 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="ZlibInstallLogs.log"
+LOGS_NAME="M4InstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
 iinstall(){
+	echo "! Fix problems required by Glibc."
+	sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+	echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
 	conf="./${CONFIGURE_FILE}"
 	if [ ! -f $conf ];then
 		echo "Can't find ${conf}"
@@ -14,7 +18,8 @@ iinstall(){
 	fi
 
 	echo "Configuring ... ..."
-	$conf --prefix=/usr 1> /dev/null 2> $LOGS
+	$conf --prefix=/usr \
+	1> /dev/null 2> $LOGS
 
 	echo "Making ... ..."
 	# compile package 
@@ -29,11 +34,6 @@ iinstall(){
     # install compiled package 
     make install 1> /dev/null 2>> $LOGS
 
-    echo "! Rebuild shared lib"
-    echo "move: /usr/lib/libz.so.* ---> /lib"
-    mv /usr/lib/libz.so.* /lib
-	ln -sfv ../../lib/$(readlink /usr/lib/libz.so) /usr/lib/libz.so
-
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
     echo "remove ${dir}"
@@ -42,8 +42,9 @@ iinstall(){
 }
 
 
+
 main(){
-	echo -e "Zlib\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 5.1M\n\r\tVersion: 1.2.11"
+	echo -e "M4\n\r\tApproximate Build Time: 0.4 SBU\n\r\tSpace: 33M\n\r\tVersion: 1.4.18"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	iinstall $*
 }

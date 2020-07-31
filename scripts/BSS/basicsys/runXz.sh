@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="ZlibInstallLogs.log"
+LOGS_NAME="XzInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,7 +14,11 @@ iinstall(){
 	fi
 
 	echo "Configuring ... ..."
-	$conf --prefix=/usr 1> /dev/null 2> $LOGS
+	$conf \
+	--prefix=/usr \
+	--disable-static \
+	--docdir=/usr/share/doc/xz-5.24 \
+	1> /dev/null 2> $LOGS
 
 	echo "Making ... ..."
 	# compile package 
@@ -28,11 +32,10 @@ iinstall(){
     echo "Make-installing ... ..."
     # install compiled package 
     make install 1> /dev/null 2>> $LOGS
-
-    echo "! Rebuild shared lib"
-    echo "move: /usr/lib/libz.so.* ---> /lib"
-    mv /usr/lib/libz.so.* /lib
-	ln -sfv ../../lib/$(readlink /usr/lib/libz.so) /usr/lib/libz.so
+    # all essential files are in the correct directory
+    mv -v /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin
+	mv -v /usr/lib/liblzma.so.* /lib
+	ln -svf ../../lib/$(readlink /usr/lib/liblzma.so) /usr/lib/liblzma.so
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -42,8 +45,9 @@ iinstall(){
 }
 
 
+
 main(){
-	echo -e "Zlib\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 5.1M\n\r\tVersion: 1.2.11"
+	echo -e "Xz\n\r\tApproximate Build Time: 0.2 SBU\n\r\tSpace: 16M\n\r\tVersion: 5.2.4"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	iinstall $*
 }

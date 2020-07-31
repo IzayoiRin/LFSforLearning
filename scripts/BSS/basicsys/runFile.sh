@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="ZlibInstallLogs.log"
+LOGS_NAME="FileInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -29,11 +29,6 @@ iinstall(){
     # install compiled package 
     make install 1> /dev/null 2>> $LOGS
 
-    echo "! Rebuild shared lib"
-    echo "move: /usr/lib/libz.so.* ---> /lib"
-    mv /usr/lib/libz.so.* /lib
-	ln -sfv ../../lib/$(readlink /usr/lib/libz.so) /usr/lib/libz.so
-
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
     echo "remove ${dir}"
@@ -43,7 +38,7 @@ iinstall(){
 
 
 main(){
-	echo -e "Zlib\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 5.1M\n\r\tVersion: 1.2.11"
+	echo -e "File\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 20M\n\r\tVersion: 5.38"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	iinstall $*
 }

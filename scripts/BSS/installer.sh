@@ -65,7 +65,14 @@ adjust(){
 
 
 basicsys2(){
-	bash ${RUNSH}/manage.sh zlib-1.2.11.tar.xz Zlib
+	bash ${RUNSH}/manage.sh zlib-1.2.11.tar.xz Zlib --test
+	bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip
+	bash ${RUNSH}/manage.sh xz-5.2.4.tar.xz Xz --test
+	bash ${RUNSH}/manage.sh file-5.38.tar.gz File --test
+	bash ${RUNSH}/manage.sh readline-8.0.tar.gz Readline
+	bash ${RUNSH}/manage.sh m4-1.4.18.tar.xz M4 --test
+	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc --test
+	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
 }
 
 
