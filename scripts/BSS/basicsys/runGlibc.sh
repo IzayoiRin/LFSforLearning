@@ -195,10 +195,11 @@ main(){
 	echo -e "Glibc\n\r\tApproximate Build Time: 19 SBU\n\r\tSpace: 5.5G\n\r\tVersion: 2.31"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	iinstall $*
-	gconf
 	if [ $? != 0 ];then
 		exit 1
 	fi
+	gconf
+	clear_temp
 }
 
 

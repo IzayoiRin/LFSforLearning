@@ -43,7 +43,7 @@ adj_check(){
 
 
 adjust(){
-	echo ">>>>> Adjust Temp Toolchains >>>>>"
+	echo ">>>>> Adjust Toolchains >>>>>"
 	# final C libraries have been installed, adjust new link
     echo "! Adjust TTC with NEW linker."
     mv -v /tools/bin/{ld,ld-old}
@@ -64,12 +64,19 @@ adjust(){
 }
 
 
+basicsys2(){
+	bash ${RUNSH}/manage.sh zlib-1.2.11.tar.xz Zlib
+}
+
+
 main(){
     cd $SOURCES
     echo "################# STEP 1 #####################"
     basicsys1
     echo "################# ADJUST #####################"
-    ajdust
+    adjust
+    echo "################# STEP 2 #####################"
+    basicsys2
 }
 
 
