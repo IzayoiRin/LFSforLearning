@@ -10,7 +10,7 @@ LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 ESS_FILES="${0%/*}/ess/"
 TIME_ZONE_PACK="/sources/tzdata2019c.tar.gz"
-LOCAL_TZ=""
+LOCAL_TZ="Asia/Shanghai"
 
 
 clear_temp(){
@@ -32,6 +32,7 @@ symlink_for_LSB(){
 
 
 min_locales_respond_difflang(){
+	# installed using localedef
 	mkdir -pv /usr/lib/locale
 	localedef -i POSIX -f UTF-8 C.UTF-8 2> /dev/null || true
 	localedef -i cs_CZ -f UTF-8 cs_CZ.UTF-8
@@ -87,6 +88,11 @@ iinstall(){
 	fi
 
 	echo "Configuring ... ..."
+	# CC: gcc record refer in /tools after compilation to avoid invalid paths in debugging
+	# werror： disable GCC warning thought test
+	# stack: enable to increase sys security by checking for buffer overflows
+	# headers: with /usr/include instead of /tools/include guiding sys find linux api header ### linuxapi: cp -r usr/include/* /usr/include ###
+	# libc_cv_slibdir: correct lib for sys using /lib instead of /lib64
 	CC="gcc -ffile-prefix-map=/tools=/usr" \
 	../configure --prefix=/usr \
 	--disable-werror \
@@ -100,17 +106,17 @@ iinstall(){
 	# compile package 
 	make 1> /dev/null 2>> $LOGS
 
+	# critical necessary test, do not skip
+ 	echo "Expect Testing ... ..."
+ 	# needed to run test in chroot env then overwrittern in install phase
+ 	echo "! Map few temp syslink for test."
 	case $(uname -m) in
 		i?86) ln -sfnv $PWD/elf/ld-linux.so.2 /lib ;;
 		x86_64) ln -sfnv $PWD/elf/ld-linux-x86-64.so.2 /lib ;;
 	esac
+    make check 1> /dev/null 2>> $LOGS
 
-	if [ "${1}" == "--test" ];then
-        echo "Expect Testing ... ..."
-        make check 1> /dev/null 2>> $LOGS
-    fi
-
-    echo "! Fix some problems"
+    echo "! Fix some problems."
     # Prevent this warning causing the absence of /etc/ld.so.conf.
     touch /etc/ld.so.conf
     # skip an unneeded sanity check that fails in the LFS partial environment
@@ -124,14 +130,14 @@ iinstall(){
 	cp -v ../nscd/nscd.conf /etc/nscd.conf
 	mkdir -pv /var/cache/nscd
 
-	echo "! Install locale set for test"
-	if [ "$2" == "--min" ];then
-		#  install the minimum set of locales necessary for the optimal coverage of tests
+	echo -e "! Install locale set for test:\n\t${1} Mod acrossing Lacaledef"
+	if [ "$1" == "--min" ];then
+		# install the minimum set of locales necessary for the optimal coverage of tests
 		locales_respond_difflang 1> /dev/null 2>> $LOGS
 	else
-		#  install all locales listed in the glibc-2.31/localedata/SUPPORTED
+		# install all locales listed in the glibc-2.31/localedata/SUPPORTED
 		make localedata/install-locales 1> /dev/null 2>> $LOGS
-
+	fi
 	return 0	
 }
 
@@ -148,24 +154,35 @@ add_time_zone(){
 
 	for tz in etcetera southamerica northamerica europe africa \
 	antarctica asia australasia backward pacificnew systemv; do
+		# create posix time zones without leap seconds
 		zic -L /dev/null -d $ZONEINFO ${tz}
 		zic -L /dev/null -d $ZONEINFO/posix ${tz}
+		# create right time zones with leap seconds
 		zic -L leapseconds -d $ZONEINFO/right ${tz}
 	done
 
 	cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
+	# create the posixrules file using NY causing daylight saving time rules
 	zic -d $ZONEINFO -p America/New_York
 	unset ZONEINFO
 
-	tzselect
+	echo "! Determin local time zone."
+	# using `tzselect` get right time zone
 	ln -sfv /usr/share/zoneinfo/${LOCAL_TZ} /etc/localtime
 }
 
 
 gconf(){
 	# solve Glibc defaults do not work well in a networked environment
+	echo "! Imporve network capability ."
 	cp -v ${ESS_FILES}nsswitch.conf /etc/nsswitch.conf
+	echo "! set up the time zone data."
 	add_time_zone
+	# dl /lib/ld-linux.so.2 search /lib & /usr/lib and find other lib guiding by /etc/ld.so.conf
+	# /usr/local/lib & /opt/lib common additional lib
+	echo "! Set dynamic loader/"
+	cp -v ${ESS_FILES}ld.so.conf /etc/ld.so.conf
+	mkdir -pv /etc/ld.so.conf.d
 }
 
 

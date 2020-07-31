@@ -18,7 +18,10 @@ cp_source(){
 main(){
     if [ "$1" == "--init" ];then
         cp_source
+    elif [ "$1" == "--debug" ];then
+        cp_source
     fi
+
     bash pre_basic_sys.sh $*
 }
 
