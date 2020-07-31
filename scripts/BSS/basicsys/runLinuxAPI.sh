@@ -5,7 +5,7 @@ LOGS_NAME="LinuxAPIInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
-icompile(){
+iinstall(){
 	echo "Ensuring no stale files" 
 	make mrproper 1>/dev/null 2>$LOGS
 	echo "Extracting user-visible kernel headers"
@@ -27,7 +27,7 @@ icompile(){
 main(){
 	echo -e "LinuxAPI\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 1G\n\r\tVersion: 5.5.3"
 	echo ">>>>> Begin to COMPILE >>>>>"
-	#icompile
+	iinstall
 }
 
 

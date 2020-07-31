@@ -1,5 +1,6 @@
-SOURCES=$LFS/sources
-
+SOURCES="${LFS}/sources"
+SETUP_ENV=`pwd`
+RUNSH="${0}"
 
 main(){
     cd $SOURCES
@@ -11,11 +12,11 @@ main(){
         tar -xf $1
         dir=`ls -F | grep '/$' | grep $package`
     fi
-    cd $LFS/sources/$dir
+    cd ${SOURCES}${dir}
     pwd
     f="`echo $0 | cut -d"/" -f1`/run${2}.sh"
     p=`echo $* | cut -d" " -f3-`
-    bash $SOURCES/$f $p 
+    bash ${0%/*}/run${2}.sh $p 
 }
 
 
