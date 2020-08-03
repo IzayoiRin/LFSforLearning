@@ -20,9 +20,10 @@ main(){
         cp_source
     elif [ "$1" == "--debug" ];then
         cp_source
+        bash pre_basic_sys.sh 
+        return
     fi
-
-    bash pre_basic_sys.sh $*
+    bash pre_basic_sys.sh $*    
 }
 
 

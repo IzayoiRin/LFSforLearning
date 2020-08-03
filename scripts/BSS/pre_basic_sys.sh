@@ -64,8 +64,10 @@ main(){
     echo "####### Change Root Environment #######"
     if [ "${1}" == "--sh" ];then
         chroot_env
-    else
+    elif [ "$#" == "0" ];then
         chroot_env $INSTALLER
+    else
+        echo "Wrong params ${1} from command."
     fi
     return 0
 }

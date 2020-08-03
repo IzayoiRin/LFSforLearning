@@ -19,8 +19,13 @@ clear_temp(){
 
 iinstall(){
 	echo "! Verify PTYs working properly."
-	expect -c "spawn ls"
-
+	msg=`expect -c "spawn ls"`
+	if [ ${msg%% *} == "spawn" ];then
+		echo "Verify Pass"
+	else
+		echo $msg
+		return 1
+	fi
 	echo "! Fix one test problems."
 	# remove one test that prevents the tests from running to completion
 	sed -i '/@\tincremental_copy/d' gold/testsuite/Makefile.in
@@ -60,7 +65,7 @@ iinstall(){
 
 	# critical necessary test, do not skip
  	echo "Expect Testing ... ..."
- 	make -k check
+ 	make -k check 1> /dev/null 2>> $LOGS
 
     echo "Make-installing ... ..."
     # install compiled package 

@@ -73,6 +73,7 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh m4-1.4.18.tar.xz M4 --test
 	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc --test
 	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
+	bash ${RUNSH}/manage.sh gmp-6.2.0.tar.xz GMP --pro-enhance
 }
 
 
