@@ -77,7 +77,7 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh mpfr-4.0.2.tar.xz MPFR
 	bash ${RUNSH}/manage.sh mpc-1.1.0.tar.gz MPC --test
 	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr
-	
+	bash ${RUNSH}/manage.sh shadow-4.8.1.tar.xz Shadow
 	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr --only-test
 }
 
