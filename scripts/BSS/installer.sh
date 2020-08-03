@@ -74,6 +74,11 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc --test
 	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
 	bash ${RUNSH}/manage.sh gmp-6.2.0.tar.xz GMP --pro-enhance
+	bash ${RUNSH}/manage.sh mpfr-4.0.2.tar.xz MPFR
+	bash ${RUNSH}/manage.sh mpc-1.1.0.tar.gz MPC --test
+	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr
+	
+	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr --only-test
 }
 
 

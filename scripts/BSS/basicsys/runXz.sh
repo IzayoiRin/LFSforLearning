@@ -20,17 +20,17 @@ iinstall(){
 	--docdir=/usr/share/doc/xz-5.2.4 \
 	1> /dev/null 2> $LOGS
 
-	echo "Making ... ..."
-	# compile package 
+	# compile package
+	echo "Making ... ..." 
 	make 1> /dev/null 2>> $LOGS
 
     if [ "${1}" == "--test" ];then
 	    echo "Expect Testing ... ..."
 	    make check 1> /dev/null 2>> $LOGS
     fi
-
+ 	
+ 	# install compiled package 
     echo "Make-installing ... ..."
-    # install compiled package 
     make install 1> /dev/null 2>> $LOGS
     # all essential files are in the correct directory
     mv -v /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin
