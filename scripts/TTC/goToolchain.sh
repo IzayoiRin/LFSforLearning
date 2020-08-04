@@ -1,7 +1,12 @@
 SOURCES_DIR="sources/"
 SROOT="${LFS}/${SOURCES_DIR}"
 LOGS_DIR=".logs/"
-RUNSH=`pwd`"/toolchain/"
+RUNSH=`pwd`"/toolchain"
+
+
+if [ ! -d ${SROOT}${LOGS_DIR} ];then
+	echo mkdir ${SROOT}${LOGS_DIR}
+fi
 
 toolchain1(){
 	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils p1
@@ -66,7 +71,7 @@ main(){
 	echo "################# STEP 3 #####################"
 	toolchain3
     echo "################# STRIP  #####################"
-    __strip__ 1>/dev/null 2>$SROOT$LOGS_DIR"StripLogs.log"
+    __strip__ 1>/dev/null 2>${SROOT}${LOGS_DIR}"StripLogs.log"
 }
 
 

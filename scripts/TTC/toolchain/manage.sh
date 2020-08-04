@@ -1,4 +1,4 @@
-SOURCES="${LFS}/sources"
+SOURCES="${LFS}/sources/"
 SETUP_ENV=`pwd`
 RUNSH="${0}"
 

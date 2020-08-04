@@ -41,7 +41,7 @@ icompile(){
 	
 	echo "Making ... ..."
 	# compile package 
-	make 1> /dev/null 2>> $LOGS
+	make 1> /dev/null 2> $LOGS
 	echo "Make-installing ... ..."
 	# install compiled package 
 	make install 1> /dev/null 2>> $LOGS

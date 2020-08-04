@@ -63,6 +63,20 @@ for_re_adjusting(){
 }
 
 
+clear_temp(){
+    echo "Cleaning Temps ... ..."
+    if [ "${1}" == "p1" ];then
+        dir=`pwd`;cd ../
+        echo "remove: ${dir}"
+    elif [ "${1}" == "p2" ];then
+        cd ../;dir=`pwd`;cd ../
+        echo "remove: ${dir}"
+    fi
+    rm -rf $dir
+    pwd
+}
+
+
 icompile(){
     if [ ! -d $BUILD_TEMP_ROOT ];then
         mkdir -v $BUILD_TEMP_ROOT
@@ -102,16 +116,7 @@ icompile(){
         for_re_adjusting
     fi
 
-    echo "Cleaning Temps ... ..."
-    if [ "${1}" == "p1" ];then
-        cd ../
-        rm -rf $BUILD_TEMP_ROOT
-    elif [ "${1}" == "p2" ];then
-        cd ../;dir=`pwd`;cd ../
-        echo "remove ${dir}"
-        rm -rf $dir
-    fi
-    pwd
+    clear_temp $1
     return 0
 }
 

@@ -68,7 +68,12 @@ additional_install(){
 	cp -v ../nscd/nscd.conf /etc/nscd.conf
 	mkdir -pv /var/cache/nscd
 
-	echo -e "! Install locale set for test:\n\t${1} Mod acrossing Lacaledef"
+	if [ "$1" == "--min" ];then
+		mod="--Min"
+	else
+		mod="--Compelet"
+
+	echo -e "! Install locale set for test:\n\t${mod} Mod acrossing Lacaledef"
 	if [ "$1" == "--min" ];then
 		# install the minimum set of locales necessary for the optimal coverage of tests
 		min_locales_respond_difflang 1> /dev/null 2>> $LOGS
@@ -142,7 +147,7 @@ iinstall(){
 	# install compiled package 
 	make install 1> /dev/null 2>> $LOGS
 
-	additional_install
+	additional_install $1
 	return 0	
 }
 

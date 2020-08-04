@@ -34,7 +34,7 @@ adj_check(){
 	grep "/lib.*/libc.so.6 " dummy.log
 
 	# make sure GCC using the correct dynamic linker
-	echo "CK4 Verify GCC dynamic linker:"
+	echo "CK6 Verify GCC dynamic linker:"
 	grep found dummy.log
 
 	# clean up the test files
@@ -77,8 +77,29 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh mpfr-4.0.2.tar.xz MPFR
 	bash ${RUNSH}/manage.sh mpc-1.1.0.tar.gz MPC --test
 	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr
+	bash ${RUNSH}/manage.sh acl-2.2.53.tar.gz Acl
 	bash ${RUNSH}/manage.sh shadow-4.8.1.tar.xz Shadow
-	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr --only-test
+	bash ${RUNSH}/manage.sh gcc-9.2.0.tar.xz Gcc
+}
+
+
+basicsys3(){
+	bash ${RUNSH}/manage.sh pkg-config-0.29.2.tar.gz Pkg --test
+	bash ${RUNSH}/manage.sh ncurses-6.2.tar.gz Ncurese
+	bash ${RUNSH}/manage.sh libcap-2.31.tar.xz Libcap --test
+	bash ${RUNSH}/manage.sh sed-4.8.tar.xz Sed --test
+	bash ${RUNSH}/manage.sh psmisc-23.2.tar.xz Psmisc
+	bash ${RUNSH}/manage.sh iana-etc-2.30.tar.bz2 Iana
+	bash ${RUNSH}/manage.sh bison-3.5.2.tar.xz Bison
+	bash ${RUNSH}/manage.sh flex-2.6.4.tar.gz Flex --test
+	bash ${RUNSH}/manage.sh bison-3.5.2.tar.xz Bison --only-test
+	bash ${RUNSH}/manage.sh grep-3.4.tar.xz Grep --test
+	bash ${RUNSH}/manage.sh bash-5.0.tar.gz Bash --test
+}
+
+
+basicsys4(){
+	bash ${RUNSH}/manage.sh acl-2.2.53.tar.gz Acl --only-test
 }
 
 
@@ -90,6 +111,10 @@ main(){
     adjust
     echo "################# STEP 2 #####################"
     basicsys2
+    echo "################# STEP 3 #####################"
+    basicsys3
+    echo "################# STEP 4 #####################"
+    
 }
 
 

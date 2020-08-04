@@ -103,11 +103,6 @@ confP1(){
 
 
 confP2(){
-	# first build of GCC installed internal system headers, but limits.h did not exist in /tools/include/, which not include the extended features of the system header to build full gcc.
-	echo "! Add internal sys header < limits.h >"
-	cat ../gcc/limitx.h ../gcc/glimits.h ../gcc/limity.h > \
-	`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include-fixed/limits.h
-	
 	echo "! Fix a problem introduced by Glibc-2.31"
 	sed -e '1161 s|^|//|' -i ../libsanitizer/sanitizer_common/sanitizer_platform_limits_posix.cc
 	# languages: C and C++ compilers are built.
@@ -130,6 +125,19 @@ confP2(){
 }
 
 icompile(){
+	if [ "${1}" == "p2" ];then
+		# first build of GCC installed internal system headers, but limits.h did not exist in /tools/include/, which not include the extended features of the system header to build full gcc.
+		echo "! Add internal sys header < limits.h >"
+		cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
+		`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include-fixed/limits.h
+	fi
+  	
+  	echo "Set gcc dynamic linker ..."
+    reconf_gcc_dynamic_linker
+
+    echo "Set default lib directory ..."
+    set_64_lib_default_directory
+    
 	if [ ! -d $BUILD_TEMP_ROOT ]; then
 		mkdir -v $BUILD_TEMP_ROOT
 	fi
@@ -216,15 +224,8 @@ main(){
             echo "Extrating ..."
             extract_gcc_requires
         elif [ ${a} == "c" ]; then
-	      	echo "Set gcc dynamic linker ..."
-            reconf_gcc_dynamic_linker
-
-            echo "Set default lib directory ..."
-            set_64_lib_default_directory
-
             echo ">>>>> Begin to COMPILE >>>>>"
             icompile $pas
-
             if [ $? != 0 ];then
                 exit 1
             fi
