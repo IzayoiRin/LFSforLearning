@@ -60,8 +60,8 @@ chroot_env(){
 
 
 setup_bss(){
-    callback=$(chroot_env ${INSTALLER1})
-    if [ "${callback}" == "${SUCE_CALL_BACK_FLG}" ];then
+    chroot_env ${INSTALLER1}
+    if [ "$?" == "${SUCE_CALL_BACK_FLG}" ];then
         chroot_env $INSTALLER2
     fi
 }

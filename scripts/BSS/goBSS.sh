@@ -1,5 +1,5 @@
 CHAROOT="${LFS}/chroot/"
-INSTALLER="installer.sh"
+INSTALLER="installer*.sh"
 
 
 cp_source(){

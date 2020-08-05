@@ -124,19 +124,19 @@ basicsys4(){
 
 main(){
     cd $SOURCES
-    # echo "################# STEP 1 #####################"
-    # basicsys1
-    # echo "################# ADJUST #####################"
-    # adjust
-    # echo "################# STEP 2 #####################"
-    # basicsys2
-    # basicsys2i
-    # basicsys2o
-    # basicsys2ii
-    # echo "################# STEP 3 #####################"
-    # basicsys3
-    # echo "############## BASH INSTALLED #################"
-  	return ${SUCE_CALL_BACK_FLG}
+    echo "################# STEP 1 #####################"
+    #basicsys1
+    echo "################# ADJUST #####################"
+    #adjust
+    echo "################# STEP 2 #####################"
+    #basicsys2
+    #basicsys2i
+    #basicsys2o
+    basicsys2ii
+    echo "################# STEP 3 #####################"
+    #basicsys3
+    echo "############## BASH INSTALLED #################"
+    return ${SUCE_CALL_BACK_FLG}
 }
 
 
