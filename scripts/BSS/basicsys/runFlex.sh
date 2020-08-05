@@ -30,7 +30,7 @@ iinstall(){
 	HELP2MAN=/tools/bin/true \
 	$conf \
 	--prefix=/usr \
-	--bindir=/bin \
+	--docdir=/usr/share/doc/flex-2.6.4 \
 	1> /dev/null 2> $LOGS
 
 	# Compile the package

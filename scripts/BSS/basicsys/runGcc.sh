@@ -24,7 +24,8 @@ icheck(){
 	# test suite is known to exhaust the stack, so increase the stack size
 	ulimit -s 32768
 	# non-privileged user do not stop at errors
-	chown -Rv nobody .
+	echo "! Change ownership to <nobody>."
+	chown -R nobody .
 	su nobody -s /bin/bash -c "PATH=$PATH make -k check" \
 	1> /dev/null 2>> $LOGS
 

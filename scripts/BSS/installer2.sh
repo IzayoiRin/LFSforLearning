@@ -6,7 +6,7 @@ LOGS_DIR=".logs/"
 
 
 basicsys4(){
-	echo "444444444444444444444444"
+	echo bash ${RUNSH}/manage.sh acl-2.2.53.tar.gz Acl --only-test
 }
 
 

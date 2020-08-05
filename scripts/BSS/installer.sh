@@ -117,24 +117,19 @@ basicsys3(){
 }
 
 
-basicsys4(){
-	bash ${RUNSH}/manage.sh acl-2.2.53.tar.gz Acl --only-test
-}
-
-
 main(){
     cd $SOURCES
     echo "################# STEP 1 #####################"
-    #basicsys1
+    basicsys1
     echo "################# ADJUST #####################"
-    #adjust
+    adjust
     echo "################# STEP 2 #####################"
-    #basicsys2
-    #basicsys2i
-    #basicsys2o
+    basicsys2
+    basicsys2i
+    basicsys2o
     basicsys2ii
     echo "################# STEP 3 #####################"
-    #basicsys3
+    basicsys3
     echo "############## BASH INSTALLED #################"
     return ${SUCE_CALL_BACK_FLG}
 }

@@ -48,7 +48,7 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
 	    echo "Expect Testing ... ..."
-	    chown -Rv nobody 
+	    chown -Rv nobody .
 	    su nobody -s /bin/bash -c "PATH=$PATH HOME=/home make tests" \
 	    1> /dev/null 2>> $LOGS
     fi
