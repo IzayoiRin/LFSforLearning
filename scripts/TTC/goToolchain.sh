@@ -21,10 +21,10 @@ toolchain1(){
 
 toolchain2(){
 	bash ${RUNSH}/manage.sh tcl8.6.10-src.tar.gz  Tcl --test
-	bash ${RUNSH}/manage.sh expect-5.45.4.tar.gz Expect --test
+	bash ${RUNSH}/manage.sh expect5.45.4.tar.gz Expect --test
 	bash ${RUNSH}/manage.sh dejagnu-1.6.2.tar.gz DejaGNU --test
 	bash ${RUNSH}/manage.sh m4-1.4.18.tar.xz M4 --test
-	bash ${RUNSH}/manage.sh ncurses-6.2.tar.gz Ncurese	
+	bash ${RUNSH}/manage.sh ncurses-6.2.tar.gz Ncurses	
 }
 
 
@@ -52,14 +52,14 @@ toolchain3(){
 
 
 __strip__(){
-    echo "! Remove unneeded debugging symbols ~70M."
-    # --strip-unneeded destroyed lib
-    strip --strip-debug /tools/lib/*
-    /usr/bin/strip --strip-unneeded /tools/{,s}bin/*
-    echo "! Remove documentation."
-    rm -rf /tools/{,share}/{info,man,doc}
-    echo "! Remove unneeded files."
-    find /tools/{lib,libexec} -name \*.la -delete
+	echo "! Remove unneeded debugging symbols ~70M."
+	# --strip-unneeded destroyed lib
+	strip --strip-debug /tools/lib/*
+	/usr/bin/strip --strip-unneeded /tools/{,s}bin/*
+	echo "! Remove documentation."
+	rm -rf /tools/{,share}/{info,man,doc}
+	echo "! Remove unneeded files."
+	find /tools/{lib,libexec} -name \*.la -delete
 }
 
 
@@ -70,8 +70,8 @@ main(){
 	toolchain2
 	echo "################# STEP 3 #####################"
 	toolchain3
-    echo "################# STRIP  #####################"
-    __strip__ 1>/dev/null 2>${SROOT}${LOGS_DIR}"StripLogs.log"
+	echo "################# STRIP  #####################"
+	__strip__ 1>/dev/null 2>${SROOT}${LOGS_DIR}"StripLogs.log"
 }
 
 
