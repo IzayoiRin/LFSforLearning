@@ -9,8 +9,8 @@ main(){
     dir=`ls -F | grep '/$' | grep $package`
     if [ ! -d "$dir" ];then
         echo "Extract from source: ${1} >> ${package}"
-        tar -xf $1
-        dir=`ls -F | grep '/$' | grep $package`
+        mkdir ${package} && tar -xf $1 -C ./${package} --strip-components 1
+        dir=${package}
     fi
     cd ${SOURCES}${dir}
     pwd

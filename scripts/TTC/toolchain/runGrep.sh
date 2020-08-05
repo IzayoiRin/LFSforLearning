@@ -37,7 +37,7 @@ icompile(){
 
 
 main(){
-	echo -e " Grep\n\r\tApproximate Build Time: 0.2 SBU\n\r\tSpace: 25M\n\r\tVersion: 3.4"
+	echo -e "Grep\n\r\tApproximate Build Time: 0.2 SBU\n\r\tSpace: 25M\n\r\tVersion: 3.4"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile $*
 }
