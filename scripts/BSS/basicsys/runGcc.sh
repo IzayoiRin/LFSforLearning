@@ -24,7 +24,7 @@ icheck(){
 	# test suite is known to exhaust the stack, so increase the stack size
 	ulimit -s 32768
 	# non-privileged user do not stop at errors
-	chown -Rv nobody 
+	chown -Rv nobody .
 	su nobody -s /bin/bash -c "PATH=$PATH make -k check" \
 	1> /dev/null 2>> $LOGS
 
@@ -64,7 +64,8 @@ iinstall(){
 	# sed: prevents a hard-coded path to /tools/bin/sed
 	# zlib: with to link sys zlib lib instead of internal one
 	SED=sed \
-	$conf --prefix=/usr \
+	$conf \
+	--prefix=/usr \
 	--enable-languages=c,c++ \
 	--disable-multilib \
 	--disable-bootstrap \
@@ -72,7 +73,7 @@ iinstall(){
 	1> /dev/null 2> $LOGS
 
 	echo "Making ... ..."
-	make tooldir=/usr 1> /dev/null 2>> $LOGS
+	make 1> /dev/null 2>> $LOGS
 	
 	# critical necessary test, do not skip
 	icheck

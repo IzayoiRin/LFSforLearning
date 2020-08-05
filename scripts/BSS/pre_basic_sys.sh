@@ -1,6 +1,9 @@
 SETUP_ENV="/chroot/"
 SETUP="${SETUP_ENV}ess/setup_root.sh"
-INSTALLER="${SETUP_ENV}installer.sh"
+INSTALLER1="${SETUP_ENV}installer.sh"
+INSTALLER2="${SETUP_ENV}installer2.sh"
+
+SUCE_CALL_BACK_FLG="BI"
 
 
 init_virtual_kernel_fs(){
@@ -52,7 +55,15 @@ chroot_env(){
     TERM="$TERM" \
     PS1='(lfs chroot) \u:\w\$ ' \
     PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
-    /tools/bin/bash --login +h $1
+    $(readlink /bin/bash || echo "/bin/bash") --login +h $1
+}
+
+
+setup_bss(){
+    callback=$(chroot_env ${INSTALLER1})
+    if [ ${callback} == ${SUCE_CALL_BACK_FLG} ];then
+        chroot_env $INSTALLER2
+    fi
 }
 
 
@@ -68,7 +79,7 @@ main(){
     if [ "${1}" == "--sh" ];then
         chroot_env
     elif [ "$#" == "0" ];then
-        chroot_env $INSTALLER
+        setup_bss
     else
         echo "Wrong params ${1} from command."
     fi

@@ -2,6 +2,7 @@ SOURCES="/sources/"
 SETUP_ENV="/chroot/"
 RUNSH="${SETUP_ENV}basicsys"
 
+SUCE_CALL_BACK_FLG="BI"
 LOGS_DIR=".logs/"
 
 if [ ! -d ${SOURCES}${LOGS_DIR} ];then
@@ -99,7 +100,6 @@ basicsys2o(){
 basicsys2ii(){
 	bash ${RUNSH}/manage.sh gcc-9.2.0.tar.xz Gcc
 }
-}
 
 
 basicsys3(){
@@ -124,19 +124,19 @@ basicsys4(){
 
 main(){
     cd $SOURCES
-    echo "################# STEP 1 #####################"
-    basicsys1
-    echo "################# ADJUST #####################"
-    adjust
-    echo "################# STEP 2 #####################"
-    basicsys2
-    basicsys2i
-    basicsys2o
-    basicsys2ii
-    echo "################# STEP 3 #####################"
-    basicsys3
-    echo "################# STEP 4 #####################"
-    
+    # echo "################# STEP 1 #####################"
+    # basicsys1
+    # echo "################# ADJUST #####################"
+    # adjust
+    # echo "################# STEP 2 #####################"
+    # basicsys2
+    # basicsys2i
+    # basicsys2o
+    # basicsys2ii
+    # echo "################# STEP 3 #####################"
+    # basicsys3
+    # echo "############## BASH INSTALLED #################"
+  	return ${SUCE_CALL_BACK_FLG}
 }
 
 
