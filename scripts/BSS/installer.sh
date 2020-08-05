@@ -2,6 +2,12 @@ SOURCES="/sources/"
 SETUP_ENV="/chroot/"
 RUNSH="${SETUP_ENV}basicsys"
 
+LOGS_DIR=".logs/"
+
+if [ ! -d ${SOURCES}${LOGS_DIR} ];then
+	mkdir -v ${SROOT}${LOGS_DIR}
+fi
+
 
 basicsys1(){
     bash ${RUNSH}/manage.sh linux-5.5.3.tar.xz LinuxAPI
@@ -72,14 +78,27 @@ basicsys2(){
 	bash ${RUNSH}/manage.sh readline-8.0.tar.gz Readline
 	bash ${RUNSH}/manage.sh m4-1.4.18.tar.xz M4 --test
 	bash ${RUNSH}/manage.sh bc-2.5.3.tar.gz Bc --test
-	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils
+}
+
+
+basicsys2i(){
+	bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils	
+}
+
+
+basicsys2o(){
 	bash ${RUNSH}/manage.sh gmp-6.2.0.tar.xz GMP --pro-enhance
 	bash ${RUNSH}/manage.sh mpfr-4.0.2.tar.xz MPFR
 	bash ${RUNSH}/manage.sh mpc-1.1.0.tar.gz MPC --test
 	bash ${RUNSH}/manage.sh attr-2.4.48.tar.gz Attr
 	bash ${RUNSH}/manage.sh acl-2.2.53.tar.gz Acl
 	bash ${RUNSH}/manage.sh shadow-4.8.1.tar.xz Shadow
+}
+
+
+basicsys2ii(){
 	bash ${RUNSH}/manage.sh gcc-9.2.0.tar.xz Gcc
+}
 }
 
 
@@ -111,6 +130,9 @@ main(){
     adjust
     echo "################# STEP 2 #####################"
     basicsys2
+    basicsys2i
+    basicsys2o
+    basicsys2ii
     echo "################# STEP 3 #####################"
     basicsys3
     echo "################# STEP 4 #####################"

@@ -5,7 +5,7 @@ RUNSH=`pwd`"/toolchain"
 
 
 if [ ! -d ${SROOT}${LOGS_DIR} ];then
-	echo mkdir ${SROOT}${LOGS_DIR}
+	mkdir -v ${SROOT}${LOGS_DIR}
 fi
 
 toolchain1(){
@@ -71,7 +71,10 @@ main(){
 	echo "################# STEP 3 #####################"
 	toolchain3
 	echo "################# STRIP  #####################"
-	__strip__ 1>/dev/null 2>${SROOT}${LOGS_DIR}"StripLogs.log"
+	__strip__ 2>${SROOT}${LOGS_DIR}"StripLogs.log"
+	echo "################# CHOWN  #####################"
+	exit
+	sudo chown -vR root:root $LFS/tools
 }
 
 

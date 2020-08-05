@@ -7,13 +7,16 @@ init_virtual_kernel_fs(){
     # Create directories onto which the file systems will be mounted
     sudo mkdir -pv $LFS/{dev,proc,sys,run}
     # Create Initial Device Nodes
+    echo "! Create Initial Device Nodes."
     sudo mknod -m 600 $LFS/dev/console c 5 1
     sudo mknod -m 666 $LFS/dev/null c 1 3
     # Mount and Populating /dev as bind mount
+    echo "! Mounte and Populate /dev"
     sudo mount -v --bind /dev $LFS/dev
     # Mount the virtual kernel filesystems
     # gid=5: all devpts-created device nodes are owned by group ID 5
     # mode=0620: user readable and writable, group writable
+    echo "! Mount Virtual Kernel File Systems."
     sudo mount -vt devpts devpts $LFS/dev/pts -o gid=5,mode=620
     sudo mount -vt proc proc $LFS/proc
     sudo mount -vt sysfs sysfs $LFS/sys

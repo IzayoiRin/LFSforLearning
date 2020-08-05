@@ -24,9 +24,11 @@ clear_temp(){
 
 symlink_for_LSB(){
 	case $(uname -m) in
-		i?86) ln -sfv ld-linux.so.2 /lib/ld-lsb.so.3 ;;
+		i?86) ln -sfv ld-linux.so.2 /lib/ld-lsb.so.3
+		;;
 		x86_64) ln -sfv ../lib/ld-linux-x86-64.so.2 /lib64
-				ln -sfv ../lib/ld-linux-x86-64.so.2 /lib64/ld-lsb-x86-64.so.3 ;;
+				ln -sfv ../lib/ld-linux-x86-64.so.2 /lib64/ld-lsb-x86-64.so.3 
+		;;
 	esac
 }
 
@@ -72,7 +74,7 @@ additional_install(){
 		mod="--Min"
 	else
 		mod="--Compelet"
-
+	fi
 	echo -e "! Install locale set for test:\n\t${mod} Mod acrossing Lacaledef"
 	if [ "$1" == "--min" ];then
 		# install the minimum set of locales necessary for the optimal coverage of tests
@@ -199,11 +201,11 @@ gconf(){
 main(){
 	echo -e "Glibc\n\r\tApproximate Build Time: 19 SBU\n\r\tSpace: 5.5G\n\r\tVersion: 2.31"
 	echo ">>>>> Begin to COMPILE >>>>>"
-	iinstall $*
+	iinstall 
 	if [ $? != 0 ];then
 		exit 1
 	fi
-	gconf
+	gconf $*
 	clear_temp
 }
 
