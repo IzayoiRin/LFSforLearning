@@ -2,7 +2,7 @@ SOURCES="/sources/"
 SETUP_ENV="/chroot/"
 RUNSH="${SETUP_ENV}basicsys"
 
-SUCE_CALL_BACK_FLG="BI"
+SUCE_CALL_BACK_FLG=200
 LOGS_DIR=".logs/"
 
 if [ ! -d ${SOURCES}${LOGS_DIR} ];then

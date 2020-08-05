@@ -3,7 +3,7 @@ SETUP="${SETUP_ENV}ess/setup_root.sh"
 INSTALLER1="${SETUP_ENV}installer.sh"
 INSTALLER2="${SETUP_ENV}installer2.sh"
 
-SUCE_CALL_BACK_FLG="BI"
+SUCE_CALL_BACK_FLG=200
 
 
 init_virtual_kernel_fs(){
@@ -61,7 +61,7 @@ chroot_env(){
 
 setup_bss(){
     callback=$(chroot_env ${INSTALLER1})
-    if [ ${callback} == ${SUCE_CALL_BACK_FLG} ];then
+    if [ "${callback}" == "${SUCE_CALL_BACK_FLG}" ];then
         chroot_env $INSTALLER2
     fi
 }
