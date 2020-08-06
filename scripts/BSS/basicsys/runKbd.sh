@@ -1,10 +1,10 @@
 # !/bin/bash
 
 CONFIGURE_FILE="configure"
-PATCH_FILE="bash-5.0-upstream_fixes-1.patch"
+PATCH_FILE="kbd-2.2.0-backspace-1.patch"
 
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="BashInstallLogs.log"
+LOGS_NAME="KbdInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -32,14 +32,17 @@ iinstall(){
         echo "Can't find ${conf}"
         return 1
     fi
+
+    echo "! Remove the redundant resizecons program."
+    sed -i 's/\(RESIZECONS_PROGS=\)yes/\1no/g' configure
+    sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
     
     # readline: with readline lib instead of its own version
     echo "Configuring ... ..."
+    PKG_CONFIG_PATH=/tools/lib/pkgconfig \
     $conf \
     --prefix=/usr \
-    --docdir=/usr/share/doc/bash-5.0 \
-    --without-bash-malloc \
-    --with-installed-readline \
+    --disable-vlock \
     1> /dev/null 2>> $LOGS
     
     # compile package 
@@ -48,22 +51,23 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
-        chown -Rv nobody .
-        su nobody -s /bin/bash -c "PATH=$PATH HOME=/home make tests" \
-        1> /dev/null 2>> $LOGS
+        make check 1> /dev/null 2>> $LOGS
     fi
     
     # install compiled package 
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
-    mv -vf /usr/bin/bash /bin
+
+    echo "Install documentation ... ..."
+    mkdir -v /usr/share/doc/kbd-2.2.0
+    cp -R docs/doc/* /usr/share/doc/kbd-2.2.0
     
     clear_temp
 }
 
 
 main(){
-    echo -e "Bash\n\r\tApproximate Build Time: 1.9 SBU\n\r\tSpace: 62M\n\r\tVersion: 5.0"
+    echo -e "Kbd\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 36M\n\r\tVersion: 2.2.0"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

@@ -34,6 +34,20 @@ basicsys5(){
 	bash ${RUNSH}/manage.sh diffutils-3.7.tar.xz Diffutils --test
 	bash ${RUNSH}/manage.sh gawk-5.0.1.tar.xz Gawk --test
 	bash ${RUNSH}/manage.sh findutils-4.7.0.tar.xz Findutils --test
+	bash ${RUNSH}/manage.sh groff-1.22.4.tar.gz Groff
+	bash ${RUNSH}/manage.sh grub-2.04.tar.xz GRUB
+	bash ${RUNSH}/manage.sh less-551.tar.gz Less
+	bash ${RUNSH}/manage.sh gzip-1.10.tar.xz Gzip --test
+	bash ${RUNSH}/manage.sh zstd-1.4.4.tar.gz Zstd
+	bash ${RUNSH}/manage.sh iproute2-5.5.0.tar.xz IPRoute
+	bash ${RUNSH}/manage.sh kbd-2.2.0.tar.xz Kbd --test
+	bash ${RUNSH}/manage.sh libpipeline-1.5.2.tar.gz Libpipeline --test
+	bash ${RUNSH}/manage.sh make-4.3.tar.gz Make --test
+	bash ${RUNSH}/manage.sh patch-2.7.6.tar.xz Patch --test
+	bash ${RUNSH}/manage.sh man-db-2.9.0.tar.xz Man-DB --test
+	bash ${RUNSH}/manage.sh tar-1.32.tar.xz Tar --test
+	bash ${RUNSH}/manage.sh texinfo-6.7.tar.xz Texinfo --test
+	bash ${RUNSH}/manage.sh vim-8.2.0190.tar.gz Vim --test
 }
 
 

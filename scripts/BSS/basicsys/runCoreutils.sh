@@ -17,7 +17,8 @@ icheck(){
     # Fix some of the permissions
     chown -Rv nobody .
     su nobody -s /bin/bash \
--c "PATH=$PATH make RUN_EXPENSIVE_TESTS=yes check"
+    -c "PATH=$PATH make RUN_EXPENSIVE_TESTS=yes check" \
+    1> /dev/null 2>> $LOGS
     echo "! Remove the temporary group."
     sed -i '/dummy/d' /etc/group
 }
