@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="OpenSSLInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,13 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # libgdbm: enable with libgdbm compatibility library to provide older DBM 
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --openssldir=/etc/ssl \
+    --libdir=lib \
+    shared \
+    zlib-dynamic \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -29,12 +29,18 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
-        make check 1> /dev/null 2>> $LOGS
+        make test 1> /dev/null 2>> $LOGS
     fi
 
     # install compiled package 
     echo "Make-installing ... ..."
-    make install 1> /dev/null 2>> $LOGS
+    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
+    make MANSUFFIX=ssl install \
+    1> /dev/null 2>> $LOGS
+
+    echo "Install documentation ... ..."
+    mv -v /usr/share/doc/openssl /usr/share/doc/openssl-1.1.1d
+    cp -fr doc/* /usr/share/doc/openssl-1.1.1d
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -45,7 +51,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "OpenSSL\n\r\tApproximate Build Time: 2.1 SBU\n\r\tSpace: 146M\n\r\tVersion: 1.1.1d"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

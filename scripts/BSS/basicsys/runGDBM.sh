@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="GDBMInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,11 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # libgdbm: enable with libgdbm compatibility library to provide older DBM 
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --disable-static \
+    --enable-libgdbm-compat \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -45,7 +43,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "GDBM\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 11M\n\r\tVersion: 1.18.1"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

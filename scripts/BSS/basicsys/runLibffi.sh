@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="LibffiInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,11 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # gcc-arch: with to ensure gcc optimizes for the current system
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --disable-static \
+    --with-gcc-arch=native \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -45,7 +43,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Libffi\n\r\tApproximate Build Time: 1.9 SBU\n\r\tSpace: 10M\n\r\tVersion: 3.3"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="KmodInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,27 +14,29 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # xz,zilb: with to handle compressed kernel modules.
+    # rootlibdir: with to ensures different library related files are placed in the correct directories.
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --bindir=/bin \
+    --sysconfdir=/etc \
+    --with-rootlibdir=/lib \
+    --with-xz \
+    --with-zlib \
     1> /dev/null 2> $LOGS
 
     # compile package 
     echo "Making ... ..."
     make 1> /dev/null 2>> $LOGS
 
-    if [ "${1}" == "--test" ];then
-        echo "Expect Testing ... ..."
-        make check 1> /dev/null 2>> $LOGS
-    fi
-
     # install compiled package 
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
+
+    for target in depmod insmod lsmod modinfo modprobe rmmod; do
+        ln -sfv ../bin/kmod /sbin/$target
+    done
+    ln -sfv kmod /bin/lsmod
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -45,10 +47,10 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Kmod-26\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 13M\n\r\tVersion: 26"
     echo ">>>>> Begin to COMPILE >>>>>"
-    iinstall $*
+    iinstall
 }
 
 
-main $*
+main

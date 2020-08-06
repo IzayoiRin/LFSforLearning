@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="InetutilsInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,18 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # logger: disable installing logger.
+    # r*: disable installing obsolete due to security.
+    # servers: disable installing network servers.
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --localstatedir=/var \
+    --disable-logger \
+    --disable-rcp \
+    --disable-rexec \
+    --disable-rlogin \
+    --disable-rsh \
+    --disable-servers \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -36,6 +41,10 @@ iinstall(){
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
 
+    # available if /usr is not accessible
+    mv -v /usr/bin/{hostname,ping,ping6,traceroute} /bin
+    mv -v /usr/bin/ifconfig /sbin
+
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
     echo "remove ${dir}"
@@ -45,7 +54,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Inetutils\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 29M\n\r\tVersion: 1.9.4"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

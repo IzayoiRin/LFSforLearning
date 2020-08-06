@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="GettextInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,11 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
+    # libgdbm: enable with libgdbm compatibility library to provide older DBM 
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --disable-static \
+    --docdir=/usr/share/doc/gettext-0.20.1 \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -35,6 +33,7 @@ iinstall(){
     # install compiled package 
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
+    chmod -v 0755 /usr/lib/preloadable_libintl.so
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -45,7 +44,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Gettext\n\r\tApproximate Build Time: 2.7 SBU\n\r\tSpace: 249M\n\r\tVersion: 0.20.1"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

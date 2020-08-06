@@ -1,14 +1,18 @@
 # !bin/bash
 
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="ManpagesInstallLogs.log"
+LOGS_NAME="MesonInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
 iinstall(){
+    echo "Making ... ..." 
+    python3 setup.py build 1>/dev/null 2>$LOGS
+    
     echo "Make-installing ... ..."
-    # install compiled package 
-    make install 1> /dev/null 2> $LOGS
+    python3 setup.py install --root=dest \
+    1>/dev/null 2>>$LOGS
+    cp -r dest/* /
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -19,7 +23,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Man-pages\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 31M\n\r\tVersion: 5.05"
+    echo -e "Meson\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 31M\n\r\tVersion: 0.53.1"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall
 }

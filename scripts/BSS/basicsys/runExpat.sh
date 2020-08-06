@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME="ExpatInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -13,14 +13,14 @@ iinstall(){
         return 1
     fi
 
+    echo "Fix a problem in LFS env"
+    sed -i 's|usr/bin/env |bin/|' run.sh.in
+
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+    --disable-static \
+    --docdir=/usr/share/doc/expat-2.2.9 \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -36,6 +36,10 @@ iinstall(){
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
 
+    echo "Install documentation ... ..."
+    install -m644 doc/*.{html,png,css} /usr/share/doc/expat-2.2.9 \
+    1> /dev/null 2>> $LOGS
+
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
     echo "remove ${dir}"
@@ -45,7 +49,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Expat\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 11M\n\r\tVersion: 2.2.9"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

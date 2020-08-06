@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME= "GperfInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,9 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
+     --docdir=/usr/share/doc/gperf-3.1 \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -29,7 +25,11 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
-        make check 1> /dev/null 2>> $LOGS
+        n=$(echo ${2} || echo 1)
+        echo -e "/t-cores: ${n}"
+        # with multiple cores causing failed test
+        make -j${n} check \
+        1> /dev/null 2>> $LOGS
     fi
 
     # install compiled package 
@@ -45,7 +45,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Gperf\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 6.3M\n\r\tVersion: 3.1"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }

@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="PkgconfigInstallLogs.log"
+LOGS_NAME= "LibtoolInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,13 +14,8 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # internal: with to ust internal Glib which not available in LFS
-    # host-tool: disable creation of an undesired hard link to pkg
     $conf \
     --prefix=/usr \
-    --with-internal-glib \
-    --disable-host-tool \
-    --docdir=/usr/share/doc/pkg-config-0.29.2 \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -29,7 +24,12 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
-        make check 1> /dev/null 2>> $LOGS
+        n=$(echo ${2} || echo 4)
+        echo -e "/t-cores: ${n}"
+        # with multiple cores
+        make check \
+        TESTSUITEFLAGS=-j${n} \
+        1> /dev/null 2>> $LOGS
     fi
 
     # install compiled package 
@@ -45,7 +45,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Pkg-config\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 30M\n\r\tVersion: 0.29.2"
+    echo -e "Libtool\n\r\tApproximate Build Time: 1.8 SBU\n\r\tSpace: 43M\n\r\tVersion: 2.4.6"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }
