@@ -30,7 +30,10 @@ basicsys4(){
 
 
 basicsys5(){
-
+	bash ${RUNSH}/manage.sh check-0.14.0.tar.gz Check --test
+	bash ${RUNSH}/manage.sh diffutils-3.7.tar.xz Diffutils --test
+	bash ${RUNSH}/manage.sh gawk-5.0.1.tar.xz Gawk --test
+	bash ${RUNSH}/manage.sh findutils-4.7.0.tar.xz Findutils --test
 }
 
 

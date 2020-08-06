@@ -1,6 +1,8 @@
 # !bin/bash
 
 CONFIGURE_FILE="configure"
+ESS_FILES="${0%/*}/ess/"
+
 LOG_PREFIX="/sources/.logs/"
 LOGS_NAME="ShadowInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
@@ -21,7 +23,7 @@ conf_shadow(){
     echo "! Enable shadowed group passwords."
     grpconv
     echo "! Set password for user root"
-    passwd root
+    passwd root < ${ESS_FILES}pwd.ini
 }
 
 
