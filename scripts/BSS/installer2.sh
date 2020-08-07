@@ -53,7 +53,7 @@ basicsys5(){
     bash ${RUNSH}/manage.sh util-linux-2.35.1.tar.xz UtilL --test
     bash ${RUNSH}/manage.sh e2fsprogs-1.45.5.tar.gz E2fsprogs --test
     bash ${RUNSH}/manage.sh sysvinit-2.96.tar.xz Sysvinit
-    bash ${RUNSH}/manage.sh eudev-3.2.9.tar.gz  Eudev --test
+    bash ${RUNSH}/manage.sh eudev-3.2.9.tar.gz Eudev --test
 }
 
 

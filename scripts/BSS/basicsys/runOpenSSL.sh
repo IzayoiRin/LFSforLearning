@@ -1,6 +1,6 @@
 # !bin/bash
 
-CONFIGURE_FILE="configure"
+CONFIGURE_FILE="config"
 LOG_PREFIX="/sources/.logs/"
 LOGS_NAME="OpenSSLInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
