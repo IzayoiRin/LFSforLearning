@@ -43,6 +43,7 @@ iinstall(){
     make 1> /dev/null 2>> $LOGS
 
     if [ "${1}" == "--only-test" ];then
+        echo "!!! ONLY TEST !!!"
         itest --test
         clear_temp
         return 0

@@ -26,7 +26,7 @@ iinstall(){
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
         n=$(echo ${2} || echo 4)
-        echo -e "/t-cores: ${n}"
+        echo -e "\t-cores: ${n}"
         # with multiple cores causing failed test
         make -j${n} check \
         1> /dev/null 2>> $LOGS

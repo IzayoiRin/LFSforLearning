@@ -1,6 +1,8 @@
 # !bin/bash
 
 CONFIGURE_FILE="configure"
+DOCS_PACK="python-3.8.1-docs-html.tar.bz2"
+
 LOG_PREFIX="/sources/.logs/"
 LOGS_NAME="PythonInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
@@ -10,6 +12,12 @@ iinstall(){
     conf="./${CONFIGURE_FILE}"
     if [ ! -f $conf ];then
         echo "Can't find ${conf}"
+        return 1
+    fi
+
+    docs="../${DOCS_PACK}"
+    if [ ! -f $docs ];then
+        echo "Can't find ${docs}"
         return 1
     fi
 
@@ -42,7 +50,7 @@ iinstall(){
     --no-same-owner \
     --no-same-permissions \
     -C /usr/share/doc/python-3.8.1/html \
-    -xvf ../python-3.8.1-docs-html.tar.bz2
+    -xvf $docs
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../

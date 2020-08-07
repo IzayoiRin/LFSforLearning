@@ -14,7 +14,7 @@ iinstall(){
     fi
 
     n=$(echo ${2} || echo 4)
-    echo -e "/t-cores: ${n}"
+    echo -e "\t-cores: ${n}"
     export NINJAJOBS=${n}
 
     echo "! Add the capability useing NINJAJOBS."

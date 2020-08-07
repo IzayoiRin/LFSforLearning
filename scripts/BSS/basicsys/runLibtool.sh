@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME= "LibtoolInstallLogs.log"
+LOGS_NAME="LibtoolInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -25,7 +25,7 @@ iinstall(){
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
         n=$(echo ${2} || echo 4)
-        echo -e "/t-cores: ${n}"
+        echo -e "\t-cores: ${n}"
         # with multiple cores
         make check \
         TESTSUITEFLAGS=-j${n} \

@@ -33,6 +33,7 @@ iinstall(){
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
 
+    echo "! Symlinks for compatibility with Module-Init-Tools."
     for target in depmod insmod lsmod modinfo modprobe rmmod; do
         ln -sfv ../bin/kmod /sbin/$target
     done

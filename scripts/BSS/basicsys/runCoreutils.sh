@@ -15,7 +15,8 @@ icheck(){
     # run the remainder of the tests as the nobody user
     echo "dummy:x:1000:nobody" >> /etc/group
     # Fix some of the permissions
-    chown -Rv nobody .
+    echo "change ownership: nobody <<< ."
+    chown -R nobody .
     su nobody -s /bin/bash \
     -c "PATH=$PATH make RUN_EXPENSIVE_TESTS=yes check" \
     1> /dev/null 2>> $LOGS
@@ -71,7 +72,8 @@ iinstall(){
     mv /usr/share/man/man1/chroot.1 /usr/share/man/man8/chroot.8
     sed -i s/\"1\"/\"8\"/1 /usr/share/man/man8/chroot.8
 
-    mv -v /usr/bin/{head,nice,sleep,touch} /bin
+    echo "! Map LFS-Bootscripts package dependency."
+    mv /usr/bin/{head,nice,sleep,touch} /bin
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../

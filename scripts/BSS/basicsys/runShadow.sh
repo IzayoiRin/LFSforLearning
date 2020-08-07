@@ -23,7 +23,7 @@ conf_shadow(){
     echo "! Enable shadowed group passwords."
     grpconv
     echo "! Set password for user root"
-    passwd root < ${ESS_FILES}pwd.ini
+    chpasswd < ${ESS_FILES}pwd.ini
 }
 
 

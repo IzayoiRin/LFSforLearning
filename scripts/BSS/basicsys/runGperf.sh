@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME= "GperfInstallLogs.log"
+LOGS_NAME="GperfInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -16,7 +16,7 @@ iinstall(){
     echo "Configuring ... ..."
     $conf \
     --prefix=/usr \
-     --docdir=/usr/share/doc/gperf-3.1 \
+    --docdir=/usr/share/doc/gperf-3.1 \
     1> /dev/null 2> $LOGS
 
     # compile package 
