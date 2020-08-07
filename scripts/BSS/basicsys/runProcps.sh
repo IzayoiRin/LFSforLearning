@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="AutomakeInstallLogs.log"
+LOGS_NAME="Procps-ngInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -16,7 +16,11 @@ iinstall(){
     echo "Configuring ... ..."
     $conf \
     --prefix=/usr \
-     --docdir=/usr/share/doc/automake-1.16.1 \
+    --exec-prefix= \
+    --libdir=/usr/lib \
+    --docdir=/usr/share/doc/procps-ng-3.3.15 \
+    --disable-static \
+    --disable-kill \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -24,17 +28,22 @@ iinstall(){
     make 1> /dev/null 2>> $LOGS
 
     if [ "${1}" == "--test" ];then
+        echo "! Remove a test"
+        sed -i -r 's|(pmap_initname)\\\$|\1|' testsuite/pmap.test/pmap.exp
+        sed -i '/set tty/d' testsuite/pkill.test/pkill.exp
+        rm testsuite/pgrep.test/pgrep.exp
+
         echo "Expect Testing ... ..."
-        n=$(echo ${2} || echo 4)
-        echo -e "\t-cores: ${n}"
-        # with multiple cores causing failed test
-        make -j${n} check \
-        1> /dev/null 2>> $LOGS
+        make check 1> /dev/null 2>> $LOGS
     fi
 
     # install compiled package 
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
+
+    echo "move: /usr/lib/libprocps.so.* ---> /lib"
+    mv /usr/lib/libprocps.so.* /lib
+    ln -sfv ../../lib/$(readlink /usr/lib/libprocps.so) /usr/lib/libprocps.so
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -45,9 +54,9 @@ iinstall(){
 
 
 main(){
-    echo -e "Automake\n\r\tApproximate Build Time: 8.1 SBU\n\r\tSpace: 107M\n\r\tVersion: 1.16.1"
+    echo -e "Procps-ng\n\r\tApproximate Build Time: 0.1 SBU\n\r\tSpace: 17M\n\r\tVersion: 3.3.15"
     echo ">>>>> Begin to COMPILE >>>>>"
-    iinstall $*
+    iinstall $1
 }
 
 

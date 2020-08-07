@@ -2,6 +2,7 @@ SETUP_ENV="/chroot/"
 SETUP="${SETUP_ENV}ess/setup_root.sh"
 INSTALLER1="${SETUP_ENV}installer.sh"
 INSTALLER2="${SETUP_ENV}installer2.sh"
+UNINSTALLER="${SETUP_ENV}uninstaller.sh"
 
 SUCE_CALL_BACK_FLG=200
 
@@ -26,7 +27,7 @@ init_virtual_kernel_fs(){
     sudo mount -vt tmpfs tmpfs $LFS/run
     # some host, /dev/shm is a symbolic link to /run/shm
     if [ -h $LFS/dev/shm ]; then
-    mkdir -pv $LFS/$(readlink $LFS/dev/shm)
+        mkdir -pv $LFS/$(readlink $LFS/dev/shm)
     fi
 }
 
@@ -58,11 +59,13 @@ chroot_env(){
     $(readlink /bin/bash || echo "/bin/bash") --login +h $1
 }
 
-
 setup_bss(){
     chroot_env ${INSTALLER1}
     if [ "$?" == "${SUCE_CALL_BACK_FLG}" ];then
         chroot_env $INSTALLER2
+    fi
+    if [ "$?" == "${SUCE_CALL_BACK_FLG}" ];then
+        chroot_env $UNINSTALLER
     fi
 }
 
@@ -71,6 +74,11 @@ main(){
     if [ "${1}" == "--init" ];then
         echo "##### Prepare Virtual File System #####"
         init_virtual_kernel_fs
+        
+        if [ "${2}" == "-v" ];then
+            return 0
+        fi
+
         echo "####### Setup Root Environment #######"
         init_chroot_env
         return 0

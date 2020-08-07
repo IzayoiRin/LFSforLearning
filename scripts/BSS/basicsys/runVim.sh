@@ -10,7 +10,8 @@ LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 icheck(){
     echo "Expect Testing ... ..."
-    chown -Rv nobody .
+    echo "change ownership: nobody <<< ."
+    chown -R nobody .
     su nobody -s /bin/bash \
     -c "LANG=en_US.UTF-8 make -j1 test" &> vim-test.log
 }
@@ -43,13 +44,16 @@ iinstall(){
     # install compiled package 
     make install 1> /dev/null 2>> $LOGS
 
+    echo "! Symlink for vi&vim and the man page."
     ln -sv vim /usr/bin/vi
     for L in /usr/share/man/{,*/}man1/vim.1; do
         ln -sv vim.1 $(dirname $L)/vi.1
     done
     
+    echo "Install documentation ... ..."
     ln -sv ../vim/vim82/doc /usr/share/doc/vim-8.2.0190
 
+    echo "Vim Configuring ... ..."
     cp -v ${ESS_FILES}ld.so.conf /etc/vimrc
 
     vim -c ':options'

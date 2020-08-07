@@ -45,7 +45,7 @@ iinstall(){
     sed -i '/test.lock/s/^/#/' gnulib-tests/gnulib.mk
 
     echo "Configuring ... ..."
-    autoreconf -fiv
+    autoreconf -fiv 1> /dev/null 2>> $LOGS
     FORCE_UNSAFE_CONFIGURE=1 $conf \
     --prefix=/usr \
     --enable-no-install-program=kill,uptime \
@@ -65,9 +65,9 @@ iinstall(){
     make install 1> /dev/null 2>> $LOGS
 
     echo "! Move to locations specified."
-    mv  /usr/bin/{cat,chgrp,chmod,chown,cp,date,dd,df,echo} /bin
-    mv  /usr/bin/{false,ln,ls,mkdir,mknod,mv,pwd,rm} /bin
-    mv  /usr/bin/{rmdir,stty,sync,true,uname} /bin
+    mv /usr/bin/{cat,chgrp,chmod,chown,cp,date,dd,df,echo} /bin
+    mv /usr/bin/{false,ln,ls,mkdir,mknod,mv,pwd,rm} /bin
+    mv /usr/bin/{rmdir,stty,sync,true,uname} /bin
     mv /usr/bin/chroot /usr/sbin
     mv /usr/share/man/man1/chroot.1 /usr/share/man/man8/chroot.8
     sed -i s/\"1\"/\"8\"/1 /usr/share/man/man8/chroot.8

@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="AutomakeInstallLogs.log"
+LOGS_NAME="Util-linuxInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -12,11 +12,24 @@ iinstall(){
         echo "Can't find ${conf}"
         return 1
     fi
+    echo"! Create a directory to enable storage for the hwclock."
+    mkdir -pv /var/lib/hwclock
 
     echo "Configuring ... ..."
     $conf \
-    --prefix=/usr \
-     --docdir=/usr/share/doc/automake-1.16.1 \
+    ADJTIME_PATH=/var/lib/hwclock/adjtime \
+    --docdir=/usr/share/doc/util-linux-2.35.1 \
+    --disable-chfn-chsh \
+    --disable-login \
+    --disable-nologin \
+    --disable-su \
+    --disable-setpriv \
+    --disable-runuser \
+    --disable-pylibmount \
+    --disable-static \
+    --without-python \
+    --without-systemd \
+    --without-systemdsystemunitdir \
     1> /dev/null 2> $LOGS
 
     # compile package 
@@ -25,10 +38,9 @@ iinstall(){
 
     if [ "${1}" == "--test" ];then
         echo "Expect Testing ... ..."
-        n=$(echo ${2} || echo 4)
-        echo -e "\t-cores: ${n}"
-        # with multiple cores causing failed test
-        make -j${n} check \
+        echo "change ownership: nobody <<< ."
+        chown -R nobody .
+        su nobody -s /bin/bash -c "PATH=$PATH make -k check" \
         1> /dev/null 2>> $LOGS
     fi
 
@@ -45,9 +57,9 @@ iinstall(){
 
 
 main(){
-    echo -e "Automake\n\r\tApproximate Build Time: 8.1 SBU\n\r\tSpace: 107M\n\r\tVersion: 1.16.1"
+    echo -e "Util-linux\n\r\tApproximate Build Time: 1.1 SBU\n\r\tSpace: 289M\n\r\tVersion: 2.35.1"
     echo ">>>>> Begin to COMPILE >>>>>"
-    iinstall $*
+    iinstall $1
 }
 
 

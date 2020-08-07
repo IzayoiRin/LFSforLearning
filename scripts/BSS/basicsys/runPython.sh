@@ -50,7 +50,7 @@ iinstall(){
     --no-same-owner \
     --no-same-permissions \
     -C /usr/share/doc/python-3.8.1/html \
-    -xvf $docs
+    -xf $docs
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../

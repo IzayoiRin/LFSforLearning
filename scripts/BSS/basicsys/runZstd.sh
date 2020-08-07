@@ -14,6 +14,7 @@ iinstall(){
     echo "Make-installing ... ..."
     make  prefix=/usr install 1> /dev/null 2>> $LOGS
 
+    echo "! Remove static library & move shared library"
     rm -v /usr/lib/libzstd.a
     mv -v /usr/lib/libzstd.so.* /lib
     ln -sfv ../../lib/$(readlink /usr/lib/libzstd.so) /usr/lib/libzstd.so

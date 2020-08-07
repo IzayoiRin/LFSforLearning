@@ -14,7 +14,8 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    psize=$(echo ${1} || echo 4)
+    psize=$(echo ${1} || echo "A4")
+    echo -e "\t-page-size: ${psize}"
     PAGE=${psize} $conf \
     --prefix=/usr \
     1> /dev/null 2> $LOGS

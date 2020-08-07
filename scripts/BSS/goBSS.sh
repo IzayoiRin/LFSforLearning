@@ -1,5 +1,5 @@
 CHAROOT="${LFS}/chroot/"
-INSTALLER="installer*.sh"
+EXCECUTORS="$(dirname $0)/*installer*.sh"
 
 
 cp_source(){
@@ -11,7 +11,7 @@ cp_source(){
         echo "copy: ${i} ---> ${CHAROOT}"
     done
     sudo cp -r */ $CHAROOT
-    sudo cp -v $INSTALLER $CHAROOT
+    sudo cp -v $EXCECUTORS $CHAROOT
 }
 
 

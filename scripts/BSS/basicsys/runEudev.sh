@@ -1,8 +1,10 @@
-# !/bin/bash
+# !bin/bash
 
 CONFIGURE_FILE="configure"
+SUPPORT_PACK="udev-lfs-20171102.tar.xz"
+
 LOG_PREFIX="/sources/.logs/"
-LOGS_NAME="TexinfoInstallLogs.log"
+LOGS_NAME="EudevInstallLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -14,9 +16,15 @@ iinstall(){
     fi
 
     echo "Configuring ... ..."
-    # libgdbm: enable with libgdbm compatibility library to provide older DBM 
     $conf \
     --prefix=/usr \
+    --sbindir=/sbin \
+    --libdir=/usr/lib \
+    --sysconfdir=/etc \
+    --libexecdir=/lib \
+    --with-rootprefix= \
+    --with-rootlibdir=/lib \
+    --enable-manpages \
     --disable-static \
     1> /dev/null 2> $LOGS
 
@@ -25,6 +33,9 @@ iinstall(){
     make 1> /dev/null 2>> $LOGS
 
     if [ "${1}" == "--test" ];then
+        echo "! Create directories needed for tests."
+        mkdir -pv /lib/udev/rules.d
+        mkdir -pv /etc/udev/rules.d
         echo "Expect Testing ... ..."
         make check 1> /dev/null 2>> $LOGS
     fi
@@ -33,16 +44,17 @@ iinstall(){
     echo "Make-installing ... ..."
     make install 1> /dev/null 2>> $LOGS
 
-    echo "TeX installing ... ..."
-    make TEXMF=/usr/share/texmf install-tex \
-    1> /dev/null 2>> $LOGS
+    echo "Install some custom rules and support files ... ..."
+    
+    supr="../${SUPPORT_PACK}"
+    if [ ! -f $supr ];then
+        echo "Can't find ${supr}"
+        return 1
+    fi
 
-    pushd /usr/share/info
-    rm -v dir
-    for f in *
-        do install-info $f dir >/dev/null 2>&1
-    done
-    popd
+    make -f $supr install 1> /dev/null 2>> $LOGS
+
+    udevadm hwdb --update
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
@@ -53,7 +65,7 @@ iinstall(){
 
 
 main(){
-    echo -e "Texinfo\n\r\tApproximate Build Time: 0.7 SBU\n\r\tSpace: 116M\n\r\tVersion: 6.7"
+    echo -e "Eudev\n\r\tApproximate Build Time: 0.2 SBU\n\r\tSpace: 83M\n\r\tVersion: 3.2.9"
     echo ">>>>> Begin to COMPILE >>>>>"
     iinstall $*
 }
