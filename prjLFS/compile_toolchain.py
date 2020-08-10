@@ -11,7 +11,3 @@ class ToolchainPack(object):
         self.sys_sources = self.SYS_SOURCES or c.SYS_SOURCES
         self.pac = pac
 
-    def extract(self):
-        with tarfile.open(self.pac, "r") as tar:
-            for i in tar.getnames():
-                tar.extract(i, )

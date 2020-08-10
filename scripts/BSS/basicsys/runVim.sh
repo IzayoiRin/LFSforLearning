@@ -56,7 +56,7 @@ iinstall(){
     echo "Vim Configuring ... ..."
     cp -v ${ESS_FILES}ld.so.conf /etc/vimrc
 
-    vim -c ':options'
+    # vim -c ':options'
 
     echo "Cleaning Temps ... ..."
     dir=`pwd`;cd ../
