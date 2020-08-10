@@ -1,7 +1,8 @@
 SOURCES_DIR="sources/"
 SROOT="${LFS}/${SOURCES_DIR}"
 LOGS_DIR=".logs/"
-RUNSH=`pwd`"/toolchain"
+RUNSH="$(dirname $0)/toolchain"
+SU="$(dirname $0)/ess/su.ini"
 
 
 if [ ! -d ${SROOT}${LOGS_DIR} ];then
@@ -73,8 +74,7 @@ main(){
 	echo "################# STRIP  #####################"
 	__strip__ 2>${SROOT}${LOGS_DIR}"StripLogs.log"
 	echo "################# CHOWN  #####################"
-	exit
-	sudo chown -vR root:root $LFS/tools
+	expect ${SU}
 }
 
 

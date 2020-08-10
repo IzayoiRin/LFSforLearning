@@ -51,12 +51,13 @@ init_chroot_env(){
 
 
 chroot_env(){
+    echo "Current: $(readlink $LFS/bin/bash || echo "/bin/bash")"
     sudo chroot $LFS /tools/bin/env -i \
     HOME=/root \
     TERM="$TERM" \
     PS1='(lfs chroot) \u:\w\$ ' \
     PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
-    $(readlink /bin/bash || echo "/bin/bash") --login +h $1
+    $(readlink $LFS/bin/bash || echo "/bin/bash") --login +h $1
 }
 
 setup_bss(){
