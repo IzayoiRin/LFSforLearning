@@ -1,13 +1,8 @@
 import os
 import tarfile
 import conf as c
+from source_utils.init_recipes import TTCRecipes
 
 
-class ToolchainPack(object):
-
-    SYS_SOURCES = None
-
-    def __init__(self, pac):
-        self.sys_sources = self.SYS_SOURCES or c.SYS_SOURCES
-        self.pac = pac
-
+def main():
+    ttc = TTCRecipes()
