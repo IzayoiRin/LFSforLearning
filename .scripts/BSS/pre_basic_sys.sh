@@ -19,6 +19,11 @@ init_virtual_kernel_fs(){
     # Mount and Populating /dev as bind mount
     echo "! Mounte and Populate /dev"
     sudo mount -v --bind /dev $LFS/dev
+    # Mounte and Populate /boot
+    if [ -d /boot ];then
+        echo "! Mounte and Populate /boot"
+        sudo mount -v --bind /boot $LFS/boot
+    fi
     # Mount the virtual kernel filesystems
     # gid=5: all devpts-created device nodes are owned by group ID 5
     # mode=0620: user readable and writable, group writable
@@ -101,7 +106,7 @@ main(){
         echo "##### Prepare Virtual File System #####"
         init_virtual_kernel_fs
         
-        if [ "${2}" == "-v" ];then
+        if [ "${2}" == "virtual" ];then
             return 0
         fi
 

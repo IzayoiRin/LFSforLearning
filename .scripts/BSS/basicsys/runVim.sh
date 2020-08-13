@@ -54,7 +54,7 @@ iinstall(){
     ln -sv ../vim/vim82/doc /usr/share/doc/vim-8.2.0190
 
     echo "Vim Configuring ... ..."
-    cp -v ${ESS_FILES}ld.so.conf /etc/vimrc
+    cp -v ${ESS_FILES}vimrc /etc/vimrc
 
     # vim -c ':options'
 

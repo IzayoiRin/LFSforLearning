@@ -51,8 +51,8 @@ iinstall(){
         echo "Can't find ${supr}"
         return 1
     fi
-
-    make -f $supr install 1> /dev/null 2>> $LOGS
+    tar -xf $supr
+    make -f udev-lfs-20171102/Makefile.lfs install 1> /dev/null 2>> $LOGS
 
     udevadm hwdb --update
 
