@@ -3,7 +3,7 @@
 BUILD_TEMP_ROOT="build/"
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="LibstdcppRuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -49,7 +49,7 @@ icomplie(){
 
 
 main(){
- 	echo -e "Libstdc++\n\r\tApproximate Build Time: 0.5 SBU\n\r\tSpace: 878M\n\r\tVersion: V3[GCC-9.2.0]"
+ 	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
     package="libstdc++*"
     package_dir=`ls -F | grep $package | cut -d"/" -f1`
     echo "Found ${package_dir}"

@@ -4,7 +4,7 @@ SYSFORMT_X86_64="x86_64"
 BUILD_TEMP_ROOT="build/"
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="{{a.name}}RuningtimeLogs.log"
+LOGS_NAME="BinutilsRuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 # create a symlink of the toolchain for host 64bit
@@ -123,16 +123,16 @@ icompile(){
 
 main(){
     if [ "${1}" == "p1" ];then
-        time="{{a.sbu}}"
-        space="{{a.space}}"
+        time="1"
+        space="625M"
     elif [ "${1}" == "p2" ];then
-        time="{{b.sbu}}"
-        space="{{b.space}}"
+        time="1.1"
+        space="651M"
     else
         echo "Error: Illegal intallation pass option."
         exit 1
     fi
-    echo -e "{{a.name}} ${1}: \n\r\tApproximate Build Time: ${time} SBU\n\r\tSpace: ${space}M\n\r\tVersion: {{a.ver}}"
+    echo -e "Binutils ${1}: \n\r\tApproximate Build Time: ${time} SBU\n\r\tSpace: ${space}M\n\r\tVersion: 2.34"
     echo ">>>>> Begin to COMPILE >>>>>"
     icompile $1
     if [ $? != 0 ];then

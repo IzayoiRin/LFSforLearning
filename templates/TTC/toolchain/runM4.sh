@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="M4RuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -41,7 +41,7 @@ icompile(){
 }
 
 main(){
-	echo -e "M4\n\r\tApproximate Build Time: 0.2 SBU\n\r\tSpace: 20M\n\r\tVersion: 1.4.18"
+	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile $*
 }

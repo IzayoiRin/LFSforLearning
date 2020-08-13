@@ -1,22 +1,28 @@
 [
   {
     "0": {
-      "name": "Binutils-1",
+      "name": "Binutils",
       "ver": "2.34",
       "sbu": 1,
       "space": "625M",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "binutils",
+      "params": "p1",
+      "link": 1
     },
     "1": {
-      "name": "Gcc-1",
+      "name": "Gcc",
       "ver": "9.2.0",
       "sbu": 10,
       "space": "3.1G",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "gcc",
+      "params": "-xc p1",
+      "link": 2
     },
     "2": {
       "name": "LinuxAPI",
@@ -25,7 +31,9 @@
       "space": "1G",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "linux",
+      "params": ""
     },
     "3": {
       "name": "Glibc",
@@ -34,7 +42,9 @@
       "space": "896M",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "glibc",
+      "params": ""
     },
     "4": {
       "name": "Libstdcpp",
@@ -43,25 +53,33 @@
       "space": "878M",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "gcc",
+      "params": ""
     },
     "5": {
-      "name": "Binutils-2",
+      "name": "Binutils",
       "ver": "2.34",
       "sbu": 1.1,
       "space": "651M",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "binutils",
+      "params": "p2",
+      "link": 1
     },
     "6": {
-      "name": "Gcc-2",
+      "name": "Gcc",
       "ver": "9.2.0",
       "sbu": 13,
       "space": "3.7G",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "gcc",
+      "params": "-c p2",
+      "link": 2
     },
     "7": {
       "name": "Tcl",
@@ -70,7 +88,9 @@
       "space": "72M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "tcl",
+      "params": "--test"
     },
     "8": {
       "name": "Expect",
@@ -79,7 +99,9 @@
       "space": "4.0M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "expect",
+      "params": "--test"
     },
     "9": {
       "name": "DejaGNU",
@@ -88,7 +110,9 @@
       "space": "3.2M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "dejagnu",
+      "params": "--test"
     },
     "10": {
       "name": "M4",
@@ -97,7 +121,9 @@
       "space": "20M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "m4",
+      "params": "--test"
     },
     "11": {
       "name": "Ncurses",
@@ -106,7 +132,9 @@
       "space": "41M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "ncurses",
+      "params": ""
     },
     "12": {
       "name": "Bash",
@@ -115,25 +143,31 @@
       "space": "67M",
       "host": 0,
       "step": 3,
-      "core": 1
+      "core": 1,
+      "sname": "bash",
+      "params": "--test"
     },
     "13": {
       "name": "Bison",
-      "ver": "3.5.2",
+      "ver": "3.5.1",
       "sbu": 0.3,
       "space": "43M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "bison",
+      "params": "--test"
     },
     "14": {
-      "name": "Bzip",
+      "name": "Bzip2",
       "ver": "5.0",
       "sbu": 0.1,
       "space": "6.4M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "bzip2",
+      "params": ""
     },
     "15": {
       "name": "Coreutils",
@@ -142,7 +176,9 @@
       "space": "157M",
       "host": 0,
       "step": 3,
-      "core": 1
+      "core": 1,
+      "sname": "coreutils",
+      "params": "--test"
     },
     "16": {
       "name": "Diffutils",
@@ -151,7 +187,9 @@
       "space": "26M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "diffutils",
+      "params": "--test"
     },
     "17": {
       "name": "File",
@@ -160,7 +198,9 @@
       "space": "20M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "file",
+      "params": "--test"
     },
     "18": {
       "name": "Findutils",
@@ -169,7 +209,9 @@
       "space": "39M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "findutils",
+      "params": "--test"
     },
     "19": {
       "name": "Gawk",
@@ -178,7 +220,9 @@
       "space": "46M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "gawk",
+      "params": "--test"
     },
     "20": {
       "name": "Gettext",
@@ -187,7 +231,9 @@
       "space": "300M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "gettext",
+      "params": ""
     },
     "21": {
       "name": "Grep",
@@ -196,7 +242,9 @@
       "space": "25M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "grep",
+      "params": "--test"
     },
     "22": {
       "name": "Gzip",
@@ -205,7 +253,9 @@
       "space": "10M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "gzip",
+      "params": "--test"
     },
     "23": {
       "name": "Make",
@@ -214,7 +264,9 @@
       "space": "16M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "make",
+      "params": "--test"
     },
     "24": {
       "name": "Patch",
@@ -223,7 +275,9 @@
       "space": "16M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "patch",
+      "params": "--test"
     },
     "25": {
       "name": "Perl",
@@ -232,7 +286,9 @@
       "space": "275M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "perl",
+      "params": ""
     },
     "26": {
       "name": "Python",
@@ -241,7 +297,9 @@
       "space": "409M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "Python",
+      "params": ""
     },
     "27": {
       "name": "Sed",
@@ -250,7 +308,9 @@
       "space": "21M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "sed",
+      "params": "--test"
     },
     "28": {
       "name": "Tar",
@@ -259,7 +319,9 @@
       "space": "38M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "tar",
+      "params": "--test"
     },
     "29": {
       "name": "Texinfo",
@@ -268,7 +330,9 @@
       "space": "104M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "texinfo",
+      "params": "--test"
     },
     "30": {
       "name": "Xz",
@@ -277,7 +341,9 @@
       "space": "18M",
       "host": 0,
       "step": 3,
-      "core": 0
+      "core": 0,
+      "sname": "xz",
+      "params": "--test"
     }
   },
   {
@@ -288,16 +354,20 @@
       "space": "1G",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "linux",
+      "params": ""
     },
     "1": {
-      "name": "Manpages",
+      "name": "Man-pages",
       "ver": "5.05",
       "sbu": 0.1,
       "space": "31M",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "man-pages",
+      "params": ""
     },
     "2": {
       "name": "Glibc",
@@ -306,16 +376,20 @@
       "space": "5.5G",
       "host": 0,
       "step": 1,
-      "core": 1
+      "core": 1,
+      "sname": "glibc",
+      "params": "--min"
     },
     "3": {
-      "name": "Zlibc",
+      "name": "Zlib",
       "ver": "1.2.11",
       "sbu": 0.1,
       "space": "5.1M",
       "host": 0,
       "step": 2,
-      "core": 1
+      "core": 1,
+      "sname": "zlib",
+      "params": "--test"
     }
   }
 ]

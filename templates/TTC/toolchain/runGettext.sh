@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="GettextRuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -33,7 +33,7 @@ icompile(){
 
 
 main(){
-	echo -e "Gettext\n\r\tApproximate Build Time: 1.6 SBU\n\r\tSpace: 300M\n\r\tVersion: 0.20.1"
+	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile 
 }

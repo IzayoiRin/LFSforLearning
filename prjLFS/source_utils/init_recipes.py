@@ -8,10 +8,13 @@ class Recipes(object):
     src = None
 
     slice_rtype = None
-    retrieve_fields = None
+    retrieve_fields = {
+            "less": ["core", "name", "ver", "sbu", "space", "step", ],
+            "verbose": ["core", "name", "ver", "sbu", "space", "step",  "package", "host", ]
+        }
     retries = 3
 
-    load_placeholder = "i"
+    load_placeholder = "+"
     unload_placeholder = "!Unload"
 
     def __init__(self):
@@ -20,7 +23,6 @@ class Recipes(object):
         self.sli = None
         self.uldid = None
         self.ldid = None
-        self.whole_fields = self.src[0].fields
 
     def check_legal(self, raw_input, fields=None, itype=None, fn=None):
         if not raw_input:
@@ -62,24 +64,24 @@ class Recipes(object):
         self.uldid = [i.strip() for i in outters.split(",")] if outters else []
         self.check("uldid")
 
-    def packages_from_slice_idx(self):
+    def packages_from_slice_idx(self, verbose):
         self.sli = self.src.and_select(self.fds, self.cds, rtype=self.slice_rtype) \
             if len(self.fds) else list(range(len(self.src)))
-        sdf = self.src.retrieve(fields=self.retrieve_fields, indices=self.sli, rtype="pd.df")
-        sdf = sdf.rename(columns=dict(zip(list(sdf.columns), self.whole_fields)),
+        sdf = self.src.retrieve(fields=self.retrieve_fields[verbose], indices=self.sli, rtype="pd.df")
+        sdf = sdf.rename(columns=dict(zip(list(sdf.columns), self.retrieve_fields[verbose])),
                          index=dict(zip(list(sdf.index), self.sli)))
         print(sdf)
 
-    def packages_from_load_idx(self):
+    def packages_from_load_idx(self, verbose):
         self.uldid = np.intersect1d(self.uldid, self.sli)
         self.ldid = np.setdiff1d(np.arange(len(self.src)), self.uldid)
         info = [self.load_placeholder for _ in range(len(self.src))]
         for i in self.uldid:
             info[i] = self.unload_placeholder
         info = np.array(info).reshape(-1, 1)
-        ldf = self.src.retrieve(fields=None, indices=None, rtype="np.arr")
-        ldf = pd.DataFrame(np.hstack([ldf, info]),
-                           columns=self.whole_fields + ["info"])
+        ldf = self.src.retrieve(fields=self.retrieve_fields[verbose], indices=None, rtype="np.arr")
+        ldf = pd.DataFrame(np.hstack([info, ldf]),
+                           columns=["info"] + self.retrieve_fields[verbose])
         print(ldf)
 
     def retries_(self, exec_fn, retries=None):
@@ -102,12 +104,13 @@ class Recipes(object):
     def retries_exec2(self):
         self.set_ldid_from_input()
 
-    def __call__(self, locked="core", condi="%s == 0", retries=None):
+    def __call__(self, verbose=False, locked="core", condi="%s == 0", retries=None):
+        verbose = "verbose" if verbose else "less"
         self.retries_(exec_fn=self.retries_exec1, retries=retries)
         self.locked_field(locked, condi)
-        self.packages_from_slice_idx()
+        self.packages_from_slice_idx(verbose)
         self.retries_(exec_fn=self.retries_exec2, retries=retries)
-        self.packages_from_load_idx()
+        self.packages_from_load_idx(verbose)
 
 
 class TTCRecipes(Recipes):
@@ -116,7 +119,7 @@ class TTCRecipes(Recipes):
     def __init__(self):
         super().__init__()
         self.check_dict = {
-            "fds": {"fields": self.whole_fields},
+            "fds": {"fields": self.src[0].fields},
             "cds": {"fn": self.check_sign},
             "uldid": {"fn": self.check_numeric}
         }

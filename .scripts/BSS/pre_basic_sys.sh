@@ -1,6 +1,7 @@
 SETUP_ENV="/chroot/"
 SETUP="${SETUP_ENV}ess/setup_root.sh"
 RMTEMP="${SETUP_ENV}ess/rm_temp.sh"
+UCONF="${SETUP_ENV}/ess/usr_configure.sh"
 INSTALLER1="${SETUP_ENV}installer.sh"
 INSTALLER2="${SETUP_ENV}installer2.sh"
 UNINSTALLER="${SETUP_ENV}uninstaller.sh"
@@ -113,8 +114,10 @@ main(){
         insh
     elif [ "${1}" == "--rmtemp" ];then
         chroot_env_usr ${RMTEMP}
-    elif [ "$#" == "0" ];then
+    elif [ "${1}" == "--setup" ];then
         setup_bss
+    elif [ "${1}" == "--uconf" ];then
+        chroot_env_usr ${UCONF}
     else
         echo "Wrong params ${1} from command."
     fi

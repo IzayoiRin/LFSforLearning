@@ -9,7 +9,7 @@ LOGS = os.path.join(ROOT_DIR, "logs")
 
 SYS_SOURCES = os.path.join(ROOT_DIR, ".SYS_SOURCES")
 
-PACKAGES_URL = "wget_list"
+PACKAGES_URL = os.path.join(SOURCES, "wget_list")
 
 TTC_SHELL = os.path.join(SCRIPTS, "TTC", "toolchain")
 TTC_SHELL_TEMPLATES = os.path.join(TEMPLATES, "TTC", "toolchain")

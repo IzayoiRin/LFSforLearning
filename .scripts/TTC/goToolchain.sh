@@ -32,7 +32,7 @@ toolchain2(){
 toolchain3(){
 	bash ${RUNSH}/manage.sh bash-5.0.tar.gz Bash --test
 	bash ${RUNSH}/manage.sh bison-3.5.2.tar.xz Bison --test
-	bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip
+	bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip2
 	bash ${RUNSH}/manage.sh coreutils-8.31.tar.xz Coreutils --test
 	bash ${RUNSH}/manage.sh diffutils-3.7.tar.xz Diffutils --test
 	bash ${RUNSH}/manage.sh file-5.38.tar.gz File --test

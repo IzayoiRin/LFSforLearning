@@ -1,23 +1,39 @@
+import os
 import copy
 import json
+import re
 
 import numpy as np
 import pandas as pd
 
-SRC_JSON_ARRAY = "C:\izayoi\prjs\LFSforLearning\prjLFS\models\src.json"
+from conf import PACKAGES_URL
+
+SRC_JSON_ARRAY = os.path.join(os.path.dirname(__file__), "src.json")
 
 with open(SRC_JSON_ARRAY, "r") as f:
     SRC_ARR = json.loads(f.read())  # type: list
     SRC_NOTES = ["ttc", "bss"]
 
+with open(PACKAGES_URL, "r") as f:
+    PACKAGES = f.read()
+
 
 class SrcJSON(object):
+
+    pattern = r"[htpsf]+://.*/(%s[^/]*\.tar\.[gx]z)"
 
     def __init__(self, src_js_name, attrs):
         self.src_js_name = src_js_name
         self.__fields = list(attrs.keys())
         for k, v in attrs.items():
             setattr(self, k, v)
+        self.from_wget_list()
+
+    def from_wget_list(self):
+        p = self.pattern % getattr(self, "sname")
+        ret = re.search(p, PACKAGES)
+        setattr(self, "host", ret.group())
+        setattr(self, "package", ret.groups()[0])
 
     @property
     def fields(self):
@@ -105,21 +121,26 @@ class SrcJsonModelBase(object, metaclass=SrcJsonMeta):
                 rec.append(obj if rtype == "ins" else idx)
         return rec
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.__ori < self.__len:
-            ret = self[self.__ori]
-            self.__ori += 1
-            return ret
-        else:
-            raise StopIteration("Iteration at Max point!")
+    # def __iter__(self):
+    #     return self
+    #
+    # def __next__(self):
+    #     if self.__ori < self.__len:
+    #         ret = self[self.__ori]
+    #         self.__ori += 1
+    #         return ret
+    #     else:
+    #         raise StopIteration("Iteration at Max point!")
 
     def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            if idx.stop > self.__len:
+                raise IndexError("Index Overflow! [%s, max:%s]" % (idx.stop-1, self.__len - 1))
+            return list(self.src.values())[idx]
+
         if idx > self.__len - 1:
             raise IndexError("Index Overflow! [%s, max:%s]" % (idx, self.__len-1))
-        return self.src.get(idx)
+        return self.src[idx]
 
     def __len__(self):
         return self.__len
@@ -128,13 +149,13 @@ class SrcJsonModelBase(object, metaclass=SrcJsonMeta):
 class TTCSrcJsonModel(SrcJsonModelBase):
 
     src = "ttc"
-    filter_fields = ["host"]
+    # filter_fields = ["host", ]
 
 
 class BSSSrcJsonModel(SrcJsonModelBase):
 
     src = "bss"
-    filter_fields = ["host"]
+    # filter_fields = ["host"]
 
 
 def main_example():

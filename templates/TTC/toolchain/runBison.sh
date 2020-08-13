@@ -1,6 +1,6 @@
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="BisonRuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -35,7 +35,7 @@ icompile(){
 
 
 main(){
-	echo -e "Bison\n\r\tApproximate Build Time: 0.3 SBU\n\r\tSpace: 43M\n\r\tVersion: 3.5.2"
+	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile $*
 }

@@ -2,7 +2,7 @@
 
 DYNAMIC_LIB_MK_FILE="Makefile-libbz2_so"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="Bzip2RuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -36,7 +36,7 @@ icompile(){
 
 
 main(){
-	echo -e "Bzip2\n\r\tApproximate Build Time: <0.1 SBU\n\r\tSpace: 6.4M\n\r\tVersion: 1.0.8"
+	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile
 }

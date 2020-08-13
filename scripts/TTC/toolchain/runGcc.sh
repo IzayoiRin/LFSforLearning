@@ -5,7 +5,7 @@ SYSFORMT_X86_64="x86_64"
 BUILD_TEMP_ROOT="build/"
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="{{a.name}}RuningtimeLogs.log"
+LOGS_NAME="GccRuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -199,11 +199,11 @@ main(){
 
     pas=`echo $opt | cut -d" " -f2`
     if [ ${pas} == "p1" ];then
-        time="{{a.sbu}}"
-        space="{{a.space}}"
+        time="10"
+        space="3.1G"
     elif [ ${pas} == "p2" ];then
-        time="{{b.sbu}}"
-        space="{{b.space}}"
+        time="13"
+        space="3.7G"
     elif [ ${pas} == "p0" ];then
         echo 
     else
@@ -215,7 +215,7 @@ main(){
     pha=${pha#*-}
     stop=`expr ${#pha} - 1`
 
-    echo -e "{{name}} ${pas}: \n\r\tApproximate Build Time: ${time} SBU\n\r\tSpcae: ${space}G\n\r\tVersion: {{a.ver}}"
+    echo -e "{{name}} ${pas}: \n\r\tApproximate Build Time: ${time} SBU\n\r\tSpcae: ${space}G\n\r\tVersion: 9.2.0"
     # select ipt to execed
     for i in `seq 0 $stop`
     do

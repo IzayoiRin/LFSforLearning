@@ -1,0 +1,62 @@
+import re
+from models.src_models import TTCSrcJsonModel
+
+
+class Render(object):
+    ins_pattern = r"\{\{%s\.[a-zA-Z0-9_]+\}\}"
+    ins_pattern_ = re.compile(r"\{\{[a-zA-Z0-9_]+\.([a-zA-Z0-9_]+)\}\}")
+    func_pattern = re.compile(r"@(for):([a-zA-Z0-9_]+):([a-zA-Z0-9_]+)::(.*)::")
+
+    def render_from_ins(self, handler, *ins):
+        """
+        render template content from orm instance
+        :param handler: text content going to be processed
+        :param ins: orm instance: (ins_name, instance)
+        :return: rendered handler
+        """
+        for ret in re.findall(self.ins_pattern % ins[0], handler):
+            handler = re.sub(ret, getattr(ins[1], re.search(self.ins_pattern_, ret).group(1)), handler)
+        return handler
+
+    def _func_for(self, var_name, arr_name, handler, **iterins):
+        ret = "\n".join(
+            [self.render_from_ins(handler.strip(), var_name, ins) for ins in iterins.get(arr_name)]
+        )
+        return ret
+
+    def render_function(self, context, **kwargs):
+        func_list = re.findall(self.func_pattern, context)
+        blocks = list()
+        for func, var1, var2, handler in func_list:
+            blocks.append(
+                [r"@%s:%s:%s::.*::" % (func, var1, var2),
+                 getattr(self, "_func_%s" % func)(var1, var2, handler, **kwargs)]
+            )
+        for b, t in blocks:
+            context = re.sub(b, t, context)
+        return context
+
+
+r = Render()
+target = """echo "################# STEP 1 #####################"
+@for:i:step1:: bash ${RUNSH}/manage.sh {{i.package}} {{i.name}} {{i.params}} ::
+echo "################# STEP 2 #####################"
+@for:j:step2:: bash ${RUNSH}/manage.sh {{j.package}} {{j.name}} {{j.params}} ::
+echo "################# STEP 3 #####################"
+@for:j:step3:: bash ${RUNSH}/manage.sh {{j.package}} {{j.name}} {{j.params}} ::
+"""
+src = TTCSrcJsonModel()
+s1idx = src.and_select(fields=["step", ], conds=["%s==1", ])
+s2idx = src.and_select(fields=["step", ], conds=["%s==2", ])
+s3idx = src.and_select(fields=["step", ], conds=["%s==3", ])
+
+ret = r.render_function(
+    target,
+    step1=[src[i] for i in s1idx],
+    step2=[src[i] for i in s2idx],
+    step3=[src[i] for i in s3idx]
+)
+# print(ret)
+
+ret2 = r.render_from_ins(target, "i", src[0])
+print(ret2)

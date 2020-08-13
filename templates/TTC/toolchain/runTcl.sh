@@ -2,7 +2,7 @@
 
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="TclRuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -43,7 +43,7 @@ icompile(){
 
 
 main(){
-    echo -e "Tcl\n\r\tApproximate Build Time: 0.9 SBU\n\r\tSpace: 72M\n\r\tVersion: 8.6.10"
+    echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
     package="unix"
     package_dir=`ls -F | grep $package | cut -d"/" -f1`
     echo "Found ${package_dir}"

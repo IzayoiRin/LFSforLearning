@@ -3,7 +3,7 @@
 BUILD_TEMP_ROOT="build/"
 CONFIGURE_FILE="configure"
 LOG_PREFIX="${LFS}/sources/.logs/"
-LOGS_NAME="GlibcRuningtimeLogs.log"
+LOGS_NAME="{{name}}RuningtimeLogs.log"
 LOGS="${LOG_PREFIX}${LOGS_NAME}"
 
 
@@ -56,7 +56,7 @@ icompile(){
 
 
 main(){
-	echo -e "Glibc\n\r\tApproximate Build Time: 4.5 SBU\n\r\tSpace: 896M\n\r\tVersion: 2.31"
+	echo -e "{{name}}\n\r\tApproximate Build Time: {{sbu}}} SBU\n\r\tSpace: {{space}}\n\r\tVersion: {{ver}}"
 	echo ">>>>> Begin to COMPILE >>>>>"
 	icompile
 	if [ $? != 0 ];then

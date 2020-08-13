@@ -12,7 +12,7 @@ fi
 
 basicsys1(){
     bash ${RUNSH}/manage.sh linux-5.5.3.tar.xz LinuxAPI
-    bash ${RUNSH}/manage.sh man-pages-5.05.tar.xz Manpages
+    bash ${RUNSH}/manage.sh man-pages-5.05.tar.xz Man-pages
     bash ${RUNSH}/manage.sh glibc-2.31.tar.xz Glibc --min
 }
 
@@ -73,7 +73,7 @@ adjust(){
 
 basicsys2(){
     bash ${RUNSH}/manage.sh zlib-1.2.11.tar.xz Zlib --test
-    bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip
+    bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip2
     
     if [ ! -f /usr/bin/file ];then
         bash ${RUNSH}/manage.sh xz-5.2.4.tar.xz Xz --test
