@@ -1,3 +1,4 @@
+sudo rm -rf $LFS/chroot
 sudo umount -v $LFS/dev/pts
 sudo umount -v $LFS/dev
 sudo umount -v $LFS/run

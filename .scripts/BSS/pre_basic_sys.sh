@@ -1,7 +1,7 @@
 SETUP_ENV="/chroot/"
 SETUP="${SETUP_ENV}ess/setup_root.sh"
 RMTEMP="${SETUP_ENV}ess/rm_temp.sh"
-UCONF="${SETUP_ENV}/ess/usr_configure.sh"
+UCONF="${SETUP_ENV}ess/usr_configure.sh"
 INSTALLER1="${SETUP_ENV}installer.sh"
 INSTALLER2="${SETUP_ENV}installer2.sh"
 UNINSTALLER="${SETUP_ENV}uninstaller.sh"

@@ -77,6 +77,7 @@ infos(){
 	echo ${verson} > /etc/lfs-release
 	cp ${ESS_FILES}/lsb-release /etc/
 	cp ${ESS_FILES}/os-release /etc/
+}
 
 
 main(){
