@@ -1,3 +1,9 @@
+#! /bin/bash
+
+USERNAME="lfs"
+source /home/${USERNAME}/.bash_profile
+
+
 SOURCES_DIR="sources/"
 SROOT="${LFS}/${SOURCES_DIR}"
 LOGS_DIR=".logs/"

@@ -11,7 +11,7 @@ fi
 
 toolchain1(){
 	echo "################# STEP 1 #####################"
-	@for:i:step1::bash ${RUNSH}/manage.sh {{i.package}} {{i.name}} {{i.params}} ::
+	@for:i:step1:: bash ${RUNSH}/manage.sh {{i.package}} {{i.name}} {{i.params}} ::
 	# bash ${RUNSH}/manage.sh binutils-2.34.tar.xz Binutils p1
 	# bash ${RUNSH}/manage.sh gcc-9.2.0.tar.xz Gcc -xc p1
 	# bash ${RUNSH}/manage.sh linux-5.5.3.tar.xz LinuxAPI
@@ -24,7 +24,7 @@ toolchain1(){
 
 toolchain2(){
 	echo "################# STEP 2 #####################"
-	{{step2}}
+	@for:j:step2:: bash ${RUNSH}/manage.sh {{j.package}} {{j.name}} {{j.params}} ::
 	# bash ${RUNSH}/manage.sh tcl8.6.10-src.tar.gz  Tcl --test
 	# bash ${RUNSH}/manage.sh expect5.45.4.tar.gz Expect --test
 	# bash ${RUNSH}/manage.sh dejagnu-1.6.2.tar.gz DejaGNU --test
@@ -35,6 +35,7 @@ toolchain2(){
 
 toolchain3(){
 	echo "################# STEP 3 #####################"
+	@for:i:step3:: bash ${RUNSH}/manage.sh {{i.package}} {{i.name}} {{i.params}} ::
 	# bash ${RUNSH}/manage.sh bash-5.0.tar.gz Bash --test
 	# bash ${RUNSH}/manage.sh bison-3.5.2.tar.xz Bison --test
 	# bash ${RUNSH}/manage.sh bzip2-1.0.8.tar.gz Bzip
